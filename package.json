@@ -19,18 +19,19 @@
   },
   "dependencies": {
     "@heroicons/react": "1.0.6",
+    "@types/node-telegram-bot-api": "0.64.2",
     "clsx": "1.2.1",
     "date-fns": "2.29.3",
     "dinero.js": "2.0.0-alpha.8",
     "ms": "3.0.0-canary.1",
     "next": "14.0.3-canary.7",
+    "node-telegram-bot-api": "0.53.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "server-only": "0.0.1",
     "styled-components": "6.0.0-beta.2",
     "use-count-up": "3.0.1",
-    "vercel": "30.2.1",
-    "node-telegram-bot-api" : "0.53.0"
+    "vercel": "30.2.1"
   },
   "devDependencies": {
     "@tailwindcss/forms": "0.5.3",
