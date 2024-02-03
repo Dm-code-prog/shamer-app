@@ -31,7 +31,9 @@ export default function RootLayout({
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <title>Shamer app</title>
       </head>
-      <body>{children}</body>
+      <body className="flex flex-col items-center">
+        <div className="w-full max-w-[500px] bg-white p-8">{children}</div>
+      </body>
     </html>
   );
 }
