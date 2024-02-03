@@ -1,4 +1,8 @@
 import {NextRequest, NextResponse} from "next/server";
+import TelegramBot, {SendMessageOptions} from "node-telegram-bot-api";
+
+
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN!, {webHook: true});
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
@@ -9,20 +13,14 @@ export const POST = async (req: NextRequest) => {
 }
 
 
-const startHandler = (chatID: string) => {
-  const webAppURL = process.env.WEB_APP_URL;
-  if (!webAppURL) {
-    throw new Error('WEB_APP_URL is not defined');
-  }
-  
-  return fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
+const startHandler = async (chatID: string) => {
+  const opts = {
+    reply_markup: {
+      keyboard: [
+        [{web_app: {url: process.env.WEB_APP_URL!}, text: 'Open the Shamer app'}],
+      ],
     },
-    body: JSON.stringify({
-      chat_id: chatID,
-      text: `Welcome to the Web App! Click [here](${webAppURL}) to start using the app.`
-    })
-  });
+  } satisfies SendMessageOptions
+  
+  await bot.sendMessage(chatID, 'Shamer: Ignite your fitness journey with playful nudges and tough love. Celebrate progress, push limits, and remember—respect comes with dedication. Because, in the end, yes, you can. #RespectThroughChallenge', opts);
 }
