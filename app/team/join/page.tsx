@@ -3,7 +3,7 @@ import { Tab } from '#/ui/tab';
 import { Button } from '#/components/ui/button';
 import { Input } from '#/components/ui/input';
 
-export default function () {
+export default function Page() {
   return (
     <>
       <Card>
@@ -25,6 +25,7 @@ export default function () {
             <div className="space-y-1">
               <h2 className="text-lg font-semibold">Shameless</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 We're all about that cardio!
               </p>
             </div>
