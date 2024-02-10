@@ -17,6 +17,7 @@ export default function Page() {
     <>
       <Card className="flex flex-col items-center">
         <CardHeader>
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           <h1 className="text-center text-xl">Let's get to know u!</h1>
         </CardHeader>
         {showForm ? (

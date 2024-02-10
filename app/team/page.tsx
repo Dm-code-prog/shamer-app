@@ -23,6 +23,7 @@ export default function Page() {
     <>
       <Card className="flex flex-col items-center">
         <CardHeader>
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           <h1 className="text-xl">Let's team up!</h1>
         </CardHeader>
         <CardContent>

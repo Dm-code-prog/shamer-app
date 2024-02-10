@@ -58,6 +58,7 @@ export function HomeV0() {
               <div className="space-y-1">
                 <h2 className="text-lg font-semibold">Day 1: Run 1 mile</h2>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {/* eslint-disable-next-line react/no-unescaped-entities */}
                   You haven't started this task yet.
                 </p>
               </div>
@@ -67,6 +68,7 @@ export function HomeV0() {
               <div className="space-y-1">
                 <h2 className="text-lg font-semibold">Day 2: Walk 2 miles</h2>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {/* eslint-disable-next-line react/no-unescaped-entities */}
                   You haven't started this task yet.
                 </p>
               </div>
@@ -76,6 +78,7 @@ export function HomeV0() {
               <div className="space-y-1">
                 <h2 className="text-lg font-semibold">Day 3: Cycle 5 miles</h2>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {/* eslint-disable-next-line react/no-unescaped-entities */}
                   You haven't started this task yet.
                 </p>
               </div>
