@@ -1,9 +1,14 @@
+'use client';
+
 import { Card, CardContent, CardHeader } from '#/components/ui/card';
-import { Tab } from '#/ui/tab';
 import { Button } from '#/components/ui/button';
 import { Input } from '#/components/ui/input';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Page() {
+  const router = useRouter();
+  const gotoHome = () => router.push('/home');
   return (
     <>
       <Card>
@@ -43,6 +48,9 @@ export default function Page() {
         </CardContent>
       </Card>
       <Input placeholder="Use invite code" />
+      <Button className="w-full" onClick={gotoHome}>
+        Join by invite
+      </Button>
     </>
   );
 }
