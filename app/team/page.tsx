@@ -31,7 +31,14 @@ export default function Page() {
             <Button variant="default" onClick={gotoCreate}>
               Create team
             </Button>
-            <Button variant="secondary">Join team</Button>
+            <Button
+              onClick={() => {
+                router.push('/team/join');
+              }}
+              variant="secondary"
+            >
+              Join team
+            </Button>
           </div>
         </CardContent>
       </Card>
