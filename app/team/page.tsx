@@ -12,27 +12,28 @@ import { Input } from '#/components/ui/input';
 import { Button } from '#/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { DataTableDemo } from '#/app/home/challenge_table';
+import React from 'react';
+import { ShamerLogo } from '#/components/ui/shamer-logo';
 
 export default function Page() {
   const router = useRouter();
-  const goHome = () => router.push('/home');
+  const gotoCreate = () => router.push('/team/create');
 
   return (
-    <div className="space-y-8">
-      <Card className="flex h-[400px] flex-col justify-between">
+    <>
+      <Card className="flex flex-col items-center">
         <CardHeader>
-          <CardTitle>You are so alone</CardTitle>
-          <CardDescription>Lets find you a team.</CardDescription>
+          <h1 className="text-xl">Let's team up!</h1>
         </CardHeader>
-        <CardContent className="flex justify-between">
-          <Button size="lg" variant="default" className="w-40" onClick={goHome}>
-            Create a team
-          </Button>
-          <Button size="lg" variant="default" className="w-40" onClick={goHome}>
-            Join a team
-          </Button>
+        <CardContent>
+          <div className="flex w-full justify-between gap-4">
+            <Button variant="default" onClick={gotoCreate}>
+              Create team
+            </Button>
+            <Button variant="secondary">Join team</Button>
+          </div>
         </CardContent>
       </Card>
-    </div>
+    </>
   );
 }

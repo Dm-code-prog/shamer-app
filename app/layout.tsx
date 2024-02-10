@@ -1,5 +1,7 @@
 import '#/styles/globals.css';
 import { Metadata } from 'next';
+import { ShamerLogo } from '#/components/ui/shamer-logo';
+import React from 'react';
 
 export const metadata: Metadata = {
   title: {
@@ -25,14 +27,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="[color-scheme:light]">
+    <html lang="en" className="[color-scheme:dark]">
       <head>
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <title>Shamer app</title>
       </head>
-      <body className="flex flex-col items-center">
-        <div className="w-full max-w-[500px] bg-white p-8">{children}</div>
+      <body className="bg-background flex flex-col items-center">
+        <div className="w-full max-w-[420px]">
+          <div className="my-auto flex  h-full flex-col items-center justify-center gap-4 p-8">
+            <ShamerLogo />
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );

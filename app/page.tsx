@@ -1,44 +1,49 @@
 'use client';
 
 import { Button } from 'components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '#/components/ui/card';
-import { Input } from '#/components/ui/input';
+
 import { useRouter } from 'next/navigation';
+import { Card, CardContent, CardHeader } from '#/components/ui/card';
+import React from 'react';
+import { Input } from '#/components/ui/input';
+import { ShamerLogo } from '#/components/ui/shamer-logo';
 
 export default function Page() {
   const router = useRouter();
+
+  const [showForm, setShowForm] = React.useState(false);
+
   return (
-    <div className="space-y-8">
-      <Card>
+    <>
+      <Card className="flex flex-col items-center">
         <CardHeader>
-          <CardTitle>Welcome to Shamer.</CardTitle>
-          <CardDescription>Let your fitness journey begin</CardDescription>
+          <h1 className="text-center text-xl">Let's get to know u!</h1>
         </CardHeader>
-        <CardContent>
-          <Input placeholder="Name" />
-        </CardContent>
-        <CardContent>
-          <Input placeholder="Age" />
-        </CardContent>
-        <CardContent>
-          <Input placeholder="Weight" />
-        </CardContent>
-        <CardContent>
-          <Input placeholder="Height" />
-        </CardContent>
-        <CardFooter>
-          <Button variant="default" onClick={() => router.push('/team')}>
-            Sign up
-          </Button>
-        </CardFooter>
+        {showForm ? (
+          <CardContent className="flex w-full flex-col gap-4">
+            <Input placeholder="Name"></Input>
+            <Input placeholder="Age"></Input>
+            <Input placeholder="Weight"></Input>
+            <Button
+              onClick={() => {
+                router.push('/team');
+              }}
+            >
+              Submit
+            </Button>
+          </CardContent>
+        ) : (
+          <CardContent className="flex w-full flex-col">
+            <Button
+              onClick={() => {
+                setShowForm(true);
+              }}
+            >
+              Get started
+            </Button>
+          </CardContent>
+        )}
       </Card>
-    </div>
+    </>
   );
 }
