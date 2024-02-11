@@ -18,6 +18,7 @@ export default function Page() {
     // @ts-ignore
     if (!window?.Telegram?.WebApp?.initData) {
       alert('Please open this page in Telegram');
+      return;
     }
 
     if (!ignore) {
