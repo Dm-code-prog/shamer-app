@@ -1,24 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-
 @layer base {
   :root {
-    --background: #181818;
-    --foreground: #fff;
+    --background: #fff;
+    --foreground: #181818;
 
-    --card: #323232;
-    --card-foreground: #fff;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --card: #fff;
+    --card-foreground: #323232;
 
     --primary: #ff793f;
     --primary-foreground: #fff;
 
-    --secondary: #656565;
+    --secondary: #11ccef;
     --secondary-foreground: #fff;
 
     --muted: 210 40% 96.1%;
@@ -36,42 +33,13 @@
 
     --radius: 0.5rem;
   }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: #323232;
-    --card-foreground: #fff;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: #11ccef;
-    --secondary-foreground: #fff;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: #cccaca;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -79,4 +47,14 @@
 
 * {
   font-family: 'Bebas Neue', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #181818;
+    --foreground: #fff;
+
+    --card: #323232;
+    --card-foreground: #fff;
+  }
 }
