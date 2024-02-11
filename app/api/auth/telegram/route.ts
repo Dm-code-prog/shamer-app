@@ -5,9 +5,9 @@ export const POST = async (req: NextRequest) => {
   if (!body.initData) {
     return NextResponse.json(
       {
-        error: 'Unauthorized',
+        error: 'Bad request',
       },
-      { status: 401 },
+      { status: 400 },
     );
   }
 
