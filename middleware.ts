@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
   const shamerSession = cookies().get('shamer_session');
   if (!shamerSession) {
     return NextResponse.redirect(
-      new URL('/ui/auth/telegram', request.nextUrl).toString(),
+      new URL('/auth/telegram', request.nextUrl).toString(),
     );
   }
 }
