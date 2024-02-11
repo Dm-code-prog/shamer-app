@@ -5,9 +5,6 @@ const bot = new TelegramBot(process.env.TELEGRAM_TOKEN!, { webHook: true });
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
-  // debug
-  console.log('Received message', body);
-
   if (!body.message) {
     return NextResponse.json({ ok: true });
   }
@@ -15,7 +12,8 @@ export const POST = async (req: NextRequest) => {
   const chatID = body.message.chat.id;
   try {
     switch (body.message.text) {
-      case '/start' || '/start@FitnessShamerBot':
+      case '/start':
+      case '/start@FitnessShamerBot':
         await startHandler(chatID);
         break;
       default:
