@@ -28,6 +28,7 @@
     "@types/node-telegram-bot-api": "0.64.2",
     "class-variance-authority": "0.7.0",
     "clsx": "1.2.1",
+    "crypto": "1.0.1",
     "date-fns": "2.29.3",
     "dinero.js": "2.0.0-alpha.8",
     "lucide-react": "0.321.0",

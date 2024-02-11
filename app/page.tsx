@@ -4,7 +4,7 @@ import { Button } from 'components/ui/button';
 
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader } from '#/components/ui/card';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Input } from '#/components/ui/input';
 import { ShamerLogo } from '#/components/ui/shamer-logo';
 
@@ -12,6 +12,26 @@ export default function Page() {
   const router = useRouter();
 
   const [showForm, setShowForm] = React.useState(false);
+
+  useEffect(() => {
+    let ignore = true;
+    // @ts-ignore
+    if (!window?.Telegram?.WebApp?.initData) {
+      return;
+    }
+
+    if (!ignore) {
+      fetch('/api/auth/telegram', {
+        method: 'POST',
+        // @ts-ignore
+        body: JSON.stringify(window?.Telegram?.WebApp?.initData),
+      });
+    }
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   return (
     <>
