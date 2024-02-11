@@ -14,10 +14,10 @@ export default function Page() {
   const [showForm, setShowForm] = React.useState(false);
 
   useEffect(() => {
-    let ignore = true;
+    let ignore = false;
     // @ts-ignore
     if (!window?.Telegram?.WebApp?.initData) {
-      return;
+      alert('Please open this page in Telegram');
     }
 
     if (!ignore) {
