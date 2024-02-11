@@ -35,7 +35,7 @@ export default function Page() {
       });
 
       if (res.ok) {
-        await sleep(3000);
+        await sleep(1000);
         router.push('/ui');
       }
     };
