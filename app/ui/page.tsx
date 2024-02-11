@@ -22,9 +22,9 @@ export default function Page() {
         </CardHeader>
         {showForm ? (
           <CardContent className="flex w-full flex-col gap-4">
-            <Input placeholder="Name"></Input>
-            <Input placeholder="Age"></Input>
+            <Input placeholder="Height"></Input>
             <Input placeholder="Weight"></Input>
+            <Input placeholder="Age"></Input>
             <Button
               onClick={() => {
                 router.push('/team');

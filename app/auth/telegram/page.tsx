@@ -1,14 +1,23 @@
 'use client';
 import { useEffect } from 'react';
 import { Card, CardContent, CardHeader } from '#/components/ui/card';
+import { useRouter } from 'next/navigation';
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function Page() {
+  const router = useRouter();
+
   useEffect(() => {
     const lsInitData = localStorage.getItem('initData');
     if (lsInitData) {
       // Only for testing purposes in a browser
       // @ts-ignore
-      window.Telegram.WebApp.initData = lsInitData;
+      window.Telegram = {
+        WebApp: {
+          initData: lsInitData,
+        },
+      };
     }
 
     let ignore = false;
@@ -18,12 +27,21 @@ export default function Page() {
       return;
     }
 
-    if (!ignore) {
-      fetch('/api/auth/telegram', {
+    const authenticate = async () => {
+      const res = await fetch('/api/auth/telegram', {
         method: 'POST',
         // @ts-ignore
         body: JSON.stringify({ initData: window?.Telegram?.WebApp?.initData }),
       });
+
+      if (res.ok) {
+        await sleep(3000);
+        router.push('/ui');
+      }
+    };
+
+    if (!ignore) {
+      authenticate().catch(console.error);
     }
 
     return () => {
