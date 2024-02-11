@@ -23,7 +23,9 @@ export default function Page() {
                 We never do cardio!
               </p>
             </div>
-            <Button size="sm">Join</Button>
+            <Button size="sm" variant="secondary">
+              Join
+            </Button>
           </div>
 
           <div className="flex items-center justify-between rounded-xl border p-4">
@@ -34,7 +36,9 @@ export default function Page() {
                 We're all about that cardio!
               </p>
             </div>
-            <Button size="sm">Join</Button>
+            <Button size="sm" variant="secondary">
+              Join
+            </Button>
           </div>
           <div className="flex items-center justify-between rounded-xl border p-4">
             <div className="space-y-1">
@@ -43,7 +47,9 @@ export default function Page() {
                 Executives for CEO only. No employees allowed.
               </p>
             </div>
-            <Button size="sm">Join</Button>
+            <Button size="sm" variant="secondary">
+              Join
+            </Button>
           </div>
         </CardContent>
       </Card>
