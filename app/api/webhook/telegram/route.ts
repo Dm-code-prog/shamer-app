@@ -13,6 +13,7 @@ export const POST = async (req: NextRequest) => {
         await startHandler(chatID);
         break;
       default:
+        console.log('Unknown command', body.message.text);
         break;
     }
 
