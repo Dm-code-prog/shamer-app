@@ -7,7 +7,7 @@ import React from 'react';
 
 export default function Page() {
   const router = useRouter();
-  const gotoCreate = () => router.push('/team/create');
+  const gotoCreate = () => router.push('/ui/team/create');
 
   return (
     <>
@@ -23,7 +23,7 @@ export default function Page() {
             </Button>
             <Button
               onClick={() => {
-                router.push('/team/join');
+                router.push('/ui/team/join');
               }}
               variant="secondary"
             >

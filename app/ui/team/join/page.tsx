@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export default function Page() {
   const router = useRouter();
-  const gotoHome = () => router.push('/home');
+  const gotoHome = () => router.push('/ui/home');
   return (
     <>
       <Card>

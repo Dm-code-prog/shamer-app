@@ -27,7 +27,7 @@ export default function Page() {
             <Input placeholder="Age"></Input>
             <Button
               onClick={() => {
-                router.push('/team');
+                router.push('/ui/team');
               }}
             >
               Submit
