@@ -6,7 +6,7 @@ const bot = new TelegramBot(process.env.TELEGRAM_TOKEN!, { webHook: true });
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
   // debug
-  console.log('Received message', body.message);
+  console.log('Received message', body);
   const chatID = body.message.chat.id;
   try {
     switch (body.message.text) {
