@@ -23,6 +23,7 @@ export const POST = async (req: NextRequest) => {
 
     return NextResponse.json({ ok: true });
   } catch (error) {
+    console.error('Error handling message', body.message, error);
     return NextResponse.json({ ok: false });
   }
 };
