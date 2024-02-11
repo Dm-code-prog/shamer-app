@@ -10,7 +10,7 @@ export const POST = async (req: NextRequest) => {
   const chatID = body.message.chat.id;
   try {
     switch (body.message.text) {
-      case '/start':
+      case '/start' || '/start@FitnessShamerBot':
         await startHandler(chatID);
         break;
       default:
