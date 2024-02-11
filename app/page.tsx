@@ -25,7 +25,7 @@ export default function Page() {
       fetch('/api/auth/telegram', {
         method: 'POST',
         // @ts-ignore
-        body: JSON.stringify(window?.Telegram?.WebApp?.initData),
+        body: JSON.stringify({ initData: window?.Telegram?.WebApp?.initData }),
       });
     }
 
