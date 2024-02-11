@@ -7,6 +7,11 @@ export const POST = async (req: NextRequest) => {
   const body = await req.json();
   // debug
   console.log('Received message', body);
+
+  if (!body.message) {
+    return NextResponse.json({ ok: true });
+  }
+
   const chatID = body.message.chat.id;
   try {
     switch (body.message.text) {
