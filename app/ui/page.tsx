@@ -13,27 +13,6 @@ export default function Page() {
 
   const [showForm, setShowForm] = React.useState(false);
 
-  useEffect(() => {
-    let ignore = false;
-    // @ts-ignore
-    if (!window?.Telegram?.WebApp?.initData) {
-      alert('Please open this page in Telegram');
-      return;
-    }
-
-    if (!ignore) {
-      fetch('/api/auth/telegram', {
-        method: 'POST',
-        // @ts-ignore
-        body: JSON.stringify({ initData: window?.Telegram?.WebApp?.initData }),
-      });
-    }
-
-    return () => {
-      ignore = true;
-    };
-  }, []);
-
   return (
     <>
       <Card className="flex flex-col items-center">

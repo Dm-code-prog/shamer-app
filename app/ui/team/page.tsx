@@ -1,19 +1,9 @@
 'use client';
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '#/components/ui/card';
-import { Input } from '#/components/ui/input';
+import { Card, CardContent, CardHeader } from '#/components/ui/card';
 import { Button } from '#/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { DataTableDemo } from '#/app/home/challenge_table';
 import React from 'react';
-import { ShamerLogo } from '#/components/ui/shamer-logo';
 
 export default function Page() {
   const router = useRouter();
