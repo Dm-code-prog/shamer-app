@@ -27,6 +27,7 @@
     "@radix-ui/react-progress": "1.0.3",
     "@radix-ui/react-slot": "1.0.2",
     "@radix-ui/react-switch": "1.0.3",
+    "@radix-ui/react-tabs": "1.0.4",
     "@tanstack/react-table": "8.11.8",
     "@types/node-telegram-bot-api": "0.64.2",
     "@vercel/postgres": "0.7.2",

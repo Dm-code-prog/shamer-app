@@ -8,11 +8,7 @@ export const getSession = async (): Promise<null | UserData> => {
   if (!shamerSession) {
     return null;
   }
-  const { user_id, user_info_is_filled } = await getUserDataBySessionToken(
-    shamerSession.value,
-  );
-
-  return { user_id, user_info_is_filled };
+  return getUserDataBySessionToken(shamerSession.value);
 };
 
 export const mustSession = async () => {

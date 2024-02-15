@@ -20,9 +20,9 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  if (!user_info_is_filled && request.nextUrl.pathname !== '/ui/profile') {
+  if (!user_info_is_filled && request.nextUrl.pathname !== '/start/profile') {
     return NextResponse.redirect(
-      new URL('/ui/profile', request.nextUrl).toString(),
+      new URL('/start/profile', request.nextUrl).toString(),
     );
   }
 
@@ -34,5 +34,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/ui(.*)'],
+  matcher: ['/', '/ui(.*)', '/start(.*)'],
 };

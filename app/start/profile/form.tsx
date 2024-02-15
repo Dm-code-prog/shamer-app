@@ -69,7 +69,7 @@ export const ProfileForm = () => {
     try {
       await submit(values);
       toast.success('Profile updated');
-      router.push('/ui/team/start');
+      router.push('/start/team');
     } catch (error) {
       console.error(error);
     }

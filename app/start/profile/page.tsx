@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProfileForm } from '#/app/ui/profile/start/form';
+import { ProfileForm } from './form';
 import { Header } from '#/components/ui/header';
 
 export default function Page() {

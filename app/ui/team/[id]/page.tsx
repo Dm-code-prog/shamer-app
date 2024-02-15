@@ -6,6 +6,7 @@ import { BackNavigation } from '#/components/ui/back-navigation';
 import { Header } from '#/components/ui/header';
 import { mustSession } from '#/session';
 import { Button } from '#/components/ui/button';
+import { Progress } from '#/components/ui/progress';
 
 export default async function Page({ params }: { params: { id: string } }) {
   const session = await mustSession();
@@ -21,12 +22,12 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <>
       <Header withBackNavigation />
-      <div className="flex w-full items-center justify-between gap-8">
+      <div className="mt-4 flex w-full items-start justify-between gap-8">
         <div>
-          <h1 className="text-2xl font-black">{teamInfo.name}</h1>
+          <h1 className="text-4xl font-black">{teamInfo.name}</h1>
           <p className="text-gray-600">{teamInfo.members_count} members</p>
         </div>
-        <Avatar className="h-16 w-16">
+        <Avatar className="h-12 w-12">
           <AvatarImage src={'#'} alt={teamInfo.name} />
           <AvatarFallback>{teamInfo.name[0]}</AvatarFallback>
         </Avatar>
@@ -34,7 +35,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div className="flex w-full items-start gap-2">
         {teamInfo?.team_members?.map((member) => (
           <div className="flex flex-col items-center gap-1" key={member.emoji}>
-            <Avatar key={member.emoji}>
+            <Avatar key={member.emoji} className="h-12 w-12">
               <AvatarFallback>
                 <span>{member.emoji}</span>
               </AvatarFallback>
@@ -43,14 +44,15 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
         ))}
       </div>
-      <Card className="flex flex-col items-center">
-        <CardContent className="flex w-full flex-col">
-          <p className="text-muted-foreground text-sm">About the team</p>
-          {teamInfo.description}
-        </CardContent>
-      </Card>
-      {!teamInfo.current_user_is_member_or_owner && (
-        <Button variant="secondary">Join team</Button>
+      <Progress value={0} max={100} />
+      {teamInfo.current_user_is_member_or_owner ? (
+        <Button variant="secondary" className="mt-auto w-full" size="lg">
+          Create a challenge
+        </Button>
+      ) : (
+        <Button variant="secondary" className="mt-auto w-full" size="lg">
+          Join team
+        </Button>
       )}
     </>
   );

@@ -7,9 +7,9 @@ import React from 'react';
 
 export default function Page() {
   const router = useRouter();
-  const gotoCreate = () => router.push('/ui/team/start/create');
+  const gotoCreate = () => router.push('/start/team/create');
   const gotoJoin = () => {
-    router.push('/ui/team/start/join');
+    router.push('/start/team/join');
   };
 
   return (

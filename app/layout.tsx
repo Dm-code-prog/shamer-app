@@ -36,7 +36,7 @@ export default function RootLayout({
       </head>
       <body className="bg-background flex flex-col items-center">
         <div className="w-full max-w-[420px]">
-          <div className="my-auto flex  h-screen flex-col items-center justify-start gap-8 p-8">
+          <div className="my-auto flex  h-screen flex-col items-center justify-start gap-8 p-8 pb-16">
             {children}
           </div>
         </div>

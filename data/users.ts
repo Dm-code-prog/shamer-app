@@ -9,6 +9,16 @@ export type User = {
   telegramUsername: string;
 };
 
+type UserProfile = {
+  first_name: string;
+  last_name: string;
+  telegram_username: string;
+  externalID: string;
+  weight: number;
+  height: number;
+  age: number;
+};
+
 export const saveTelegramUser = async (u: User): Promise<string> => {
   const { rows } =
     await sql`insert into users (ext_id, first_name, last_name, telegram_username)
@@ -19,4 +29,20 @@ export const saveTelegramUser = async (u: User): Promise<string> => {
               returning id`;
 
   return rows[0].id;
+};
+
+export const getUserProfileByID = async (id: string): Promise<UserProfile> => {
+  const res = await sql`select ext_id as externalID,
+                               first_name,
+                               last_name,
+                               telegram_username,
+                               weight,
+                               height,
+                               age
+                        from users
+                                 left join user_info uf on users.id = uf.user_id
+                        where users.id = ${id}`;
+
+  const rows = res.rows as UserProfile[];
+  return rows[0];
 };

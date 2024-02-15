@@ -36,7 +36,7 @@ export default function Page() {
 
       if (res.ok) {
         await sleep(1000);
-        router.push('/ui');
+        router.push('/start/profile');
       }
     };
 
