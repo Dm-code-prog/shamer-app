@@ -49,7 +49,7 @@ export const POST = async (req: NextRequest) => {
   const lastName = userJSONObject.last_name;
   const telegramUsername = userJSONObject.username;
 
-  if (!externalID || !firstName || !lastName || !telegramUsername) {
+  if (!externalID || !telegramUsername) {
     console.error('Invalid user data', userJSONObject);
     return NextResponse.json(
       {
