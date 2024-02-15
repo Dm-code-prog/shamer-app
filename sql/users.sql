@@ -11,3 +11,9 @@ create table users
 
 create unique index users_ext_id_uindex
     on users (ext_id);
+
+alter table users
+    add column created_at timestamp default now() not null;
+
+alter table users
+add column emoji varchar(255) not null default '👤';

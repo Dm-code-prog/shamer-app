@@ -33,6 +33,7 @@ export const POST = async (req: NextRequest) => {
 
   const user = params.get('user');
   if (!user) {
+    console.error('No user data in telegram response');
     return NextResponse.json(
       {
         error: 'Internal server error',
@@ -49,6 +50,7 @@ export const POST = async (req: NextRequest) => {
   const telegramUsername = userJSONObject.username;
 
   if (!externalID || !firstName || !lastName || !telegramUsername) {
+    console.error('Invalid user data', userJSONObject);
     return NextResponse.json(
       {
         error: 'Internal server error',
@@ -57,27 +59,37 @@ export const POST = async (req: NextRequest) => {
     );
   }
 
-  const id = await saveTelegramUser({
-    externalID,
-    firstName,
-    lastName,
-    telegramUsername,
-  });
+  try {
+    const id = await saveTelegramUser({
+      externalID,
+      firstName,
+      lastName,
+      telegramUsername,
+    });
 
-  const token = await createSession(id);
+    const token = await createSession(id);
 
-  cookies().set('shamer_session', token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'strict',
-    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 90),
-  });
+    cookies().set('shamer_session', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 90),
+    });
 
-  return NextResponse.json(
-    {
-      ok: true,
-      message: 'Telegram user authorized',
-    },
-    { status: 200 },
-  );
+    return NextResponse.json(
+      {
+        ok: true,
+        message: 'Telegram user authorized',
+      },
+      { status: 200 },
+    );
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json(
+      {
+        error: 'Internal server error',
+      },
+      { status: 500 },
+    );
+  }
 };

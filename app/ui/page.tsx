@@ -1,50 +1,15 @@
-'use client';
+import { Avatar, AvatarFallback, AvatarImage } from '#/components/ui/avatar';
 
-import { Button } from 'components/ui/button';
+const emoji = '\u{1F603}';
 
-import { useRouter } from 'next/navigation';
-import { Card, CardContent, CardHeader } from '#/components/ui/card';
-import React, { useEffect } from 'react';
-import { Input } from '#/components/ui/input';
-import { ShamerLogo } from '#/components/ui/shamer-logo';
-
-export default function Page() {
-  const router = useRouter();
-
-  const [showForm, setShowForm] = React.useState(false);
-
+export default async function Page() {
   return (
     <>
-      <Card className="flex flex-col items-center">
-        <CardHeader>
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
-          <h1 className="text-center text-xl">Let's get to know u!</h1>
-        </CardHeader>
-        {showForm ? (
-          <CardContent className="flex w-full flex-col gap-4">
-            <Input placeholder="Height"></Input>
-            <Input placeholder="Weight"></Input>
-            <Input placeholder="Age"></Input>
-            <Button
-              onClick={() => {
-                router.push('/ui/team');
-              }}
-            >
-              Submit
-            </Button>
-          </CardContent>
-        ) : (
-          <CardContent className="flex w-full flex-col">
-            <Button
-              onClick={() => {
-                setShowForm(true);
-              }}
-            >
-              Get started
-            </Button>
-          </CardContent>
-        )}
-      </Card>
+      <Avatar>
+        <AvatarFallback key="fallback" className="text-2xl">
+          {emoji}
+        </AvatarFallback>
+      </Avatar>
     </>
   );
 }

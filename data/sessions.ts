@@ -8,16 +8,30 @@ export const createSession = async (userID: string): Promise<string> => {
   return rows[0].token;
 };
 
-export const getSession = async (token: string): Promise<string> => {
-  const { rows } = await sql`select user_id
-                           from sessions
-                           where token = ${token}
-                             and expires_at > now()
+export type UserData = {
+  user_id: string;
+  user_info_is_filled: boolean;
+};
+
+export const getUserDataBySessionToken = async (
+  token: string,
+): Promise<UserData> => {
+  const { rows } = await sql`
+      select s.user_id                                                               as user_id,
+             (select not (uf.weight is null or uf.height is null or uf.age is null)) as user_info_is_filled
+      from sessions s
+               left join user_info uf
+                    on s.user_id = uf.user_id
+      where token = ${token}
+        and expires_at > now()
   `;
 
   if (!rows || rows.length === 0) {
-    return '';
+    return { user_id: '', user_info_is_filled: false };
   }
 
-  return rows[0].user_id;
+  return {
+    user_id: rows[0].user_id,
+    user_info_is_filled: rows[0].user_info_is_filled,
+  };
 };

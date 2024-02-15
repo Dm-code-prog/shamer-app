@@ -2,6 +2,7 @@ import '#/styles/globals.css';
 import { Metadata } from 'next';
 import { ShamerLogo } from '#/components/ui/shamer-logo';
 import React from 'react';
+import { ToastContainer } from '#/app/ui/toast';
 
 export const metadata: Metadata = {
   title: {
@@ -35,11 +36,11 @@ export default function RootLayout({
       </head>
       <body className="bg-background flex flex-col items-center">
         <div className="w-full max-w-[420px]">
-          <div className="my-auto flex  h-full flex-col items-center justify-center gap-4 p-8">
-            <ShamerLogo />
+          <div className="my-auto flex  h-screen flex-col items-center justify-start gap-8 p-8">
             {children}
           </div>
         </div>
+        <ToastContainer />
       </body>
     </html>
   );
