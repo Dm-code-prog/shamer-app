@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@heroicons/react':
     specifier: 1.0.6
@@ -312,7 +308,7 @@ packages:
       '@babel/compat-data': 7.22.3
       '@babel/core': 7.20.7
       '@babel/helper-validator-option': 7.21.0
-      browserslist: 4.21.4
+      browserslist: 4.21.7
       lru-cache: 5.1.1
       semver: 6.3.0
     dev: false
@@ -326,7 +322,7 @@ packages:
       '@babel/compat-data': 7.22.3
       '@babel/core': 7.22.1
       '@babel/helper-validator-option': 7.21.0
-      browserslist: 4.21.4
+      browserslist: 4.21.7
       lru-cache: 5.1.1
       semver: 6.3.0
     dev: false
@@ -1309,7 +1305,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.20.7
-      '@babel/helper-plugin-utils': 7.20.2
+      '@babel/helper-plugin-utils': 7.21.5
     dev: false
 
   /@babel/plugin-syntax-typescript@7.21.4(@babel/core@7.22.1):
@@ -5028,6 +5024,7 @@ packages:
       electron-to-chromium: 1.4.284
       node-releases: 2.0.8
       update-browserslist-db: 1.0.10(browserslist@4.21.4)
+    dev: true
 
   /browserslist@4.21.7:
     resolution: {integrity: sha512-BauCXrQ7I2ftSqd2mvKHGo85XR0u7Ru3C/Hxsy/0TkfCtjrmAbPdzLGasmoiBxplpDXlPvdjX9u7srIMfgasNA==}
@@ -5714,6 +5711,7 @@ packages:
 
   /electron-to-chromium@1.4.284:
     resolution: {integrity: sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==}
+    dev: true
 
   /electron-to-chromium@1.4.424:
     resolution: {integrity: sha512-KOfOIoEE0b3L0CTDgqS+NpokmcBdxpqLIPtp9PL0v5GAMZmZXa9uoUfWJdEy63MNy6jMvKHkBVUYY5DSuqqpdw==}
@@ -7325,8 +7323,8 @@ packages:
       loose-envify: 1.4.0
     dev: false
 
-  /ip@1.1.8:
-    resolution: {integrity: sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==}
+  /ip@1.1.9:
+    resolution: {integrity: sha512-cyRxvOEpNHNtchU3Ln9KC/auJgup87llfQpQ+t5ghoC/UhL16SWzbueiCsdTnWmqAWl7LadfuwhlqmtOaqMHdQ==}
     dev: false
 
   /ip@2.0.0:
@@ -8575,6 +8573,7 @@ packages:
 
   /node-releases@2.0.8:
     resolution: {integrity: sha512-dFSmB8fFHEH/s81Xi+Y/15DQY6VHW81nXRj86EMSL3lmuTmK1e+aT4wrFCkTbm+gSwkw4KpX+rT/pMM2c1mF+A==}
+    dev: true
 
   /node-telegram-bot-api@0.53.0:
     resolution: {integrity: sha512-UGNTYZWGs/h1ecyY/2w89skjZ1O3FXIZzrQaC0daMLVIOd0pxbpOiuO9pC2DZfvlZrrLm9cCfTBGN7m0fCWgSg==}
@@ -8833,7 +8832,7 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       degenerator: 3.0.4
-      ip: 1.1.8
+      ip: 1.1.9
       netmask: 2.0.2
     dev: false
 
@@ -10718,6 +10717,7 @@ packages:
       browserslist: 4.21.4
       escalade: 3.1.1
       picocolors: 1.0.0
+    dev: true
 
   /update-browserslist-db@1.0.11(browserslist@4.21.7):
     resolution: {integrity: sha512-dCwEFf0/oT85M1fHBg4F0jtLwJrutGoHSQXCh7u4o2t1drG+c0a9Flnqww6XUKSfQMPpJBRjU8d4RXB09qtvaA==}
@@ -11147,3 +11147,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
