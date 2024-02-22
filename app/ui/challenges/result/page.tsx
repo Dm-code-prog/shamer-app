@@ -1,4 +1,4 @@
-import { Header } from '#/components/ui/header';
+'use client';
 import { Avatar, AvatarFallback } from '#/components/ui/avatar';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '#/components/ui/button';
