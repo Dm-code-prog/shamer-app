@@ -6,30 +6,22 @@
 
 @layer base {
   :root {
-    --background: #fff;
+    --background: #ffffff;
     --foreground: #181818;
 
-    --card: #fff;
+    --card: #e6e6e6;
     --card-foreground: #323232;
 
     --primary: #ff793f;
     --primary-foreground: #fff;
 
-    --secondary: #11ccef;
+    --secondary: #ff793f;
     --secondary-foreground: #fff;
 
     --muted: #f4f4f4;
     --muted-foreground: #323232;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
     --border: #4b4b4b;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
   }
@@ -47,6 +39,7 @@
 
 * {
   font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.03em;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -58,6 +51,10 @@
     --card-foreground: #fff;
 
     --muted: #323232;
-    --muted-foreground: #9a9999;
+    --muted-foreground: #c5c5c5;
+
+    --ring: #fff;
+
+    --popover: #181818;
   }
 }

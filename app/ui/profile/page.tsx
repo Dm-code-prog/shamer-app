@@ -17,9 +17,6 @@ export default async function Page() {
       </Avatar>
       <h1 className="text-2xl font-black">@{session.telegram_username}</h1>
       <Card>
-        <CardHeader>
-          <h2 className="text-xl font-bold">Your information</h2>
-        </CardHeader>
         <CardContent>
           <div className="bg-muted flex justify-between gap-2 rounded-xl p-4">
             <div className="flex flex-col items-start">

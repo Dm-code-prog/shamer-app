@@ -7,7 +7,7 @@ export const BackNavigation = () => {
   const router = useRouter();
 
   return (
-    <div className="flex w-full items-start space-x-2">
+    <div className="fixed top-8 flex w-full items-start space-x-2">
       <button onClick={() => router.back()}>
         <ChevronLeft size={32} />
       </button>

@@ -53,7 +53,7 @@ export const getFullTeamInfoByID = async (
                                       left join user_teams ut on t.id = ut.team_id
                                       left join users u on ut.user_id = u.id or t.owner_id = u.id
                              where t.id = ${id}
-                             group by t.id`;
+                             group by t.id, t.name, t.description, t.owner_id`;
   const rows = teamInfo.rows as TeamInfo[];
 
   return rows[0];

@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const NavigationMenu = () => {
   return (
-    <div className=" bg-background z-100 absolute bottom-0 flex w-full max-w-[420px] border-t-[0.5px] border-gray-800 ">
+    <div className=" bg-background z-100 fixed bottom-0 flex w-full max-w-[420px] border-t-[0.5px] border-gray-800 ">
       <Button variant="ghost" className="w-full" size="lg" asChild>
         <Link href="/ui/profile">Profile</Link>
       </Button>

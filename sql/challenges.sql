@@ -4,9 +4,9 @@ create type challenge_type as enum (
     'personal-monthly',
     'personal-one-time'
         'group-weekly',
-    'group-weekly',
     'group-monthly',
-    'group-one-time'
+    'group-one-time',
+    'group-limited'
     );
 
 
@@ -17,8 +17,8 @@ create table challenges
     name        varchar(255)   not null,
     description text           not null,
     type        challenge_type not null,
-    start_date  date           not null,
-    end_date    date           not null,
+    start_date  date,
+    end_date    date,
     created_at  timestamp      not null default now(),
     updated_at  timestamp      not null default now()
 )
