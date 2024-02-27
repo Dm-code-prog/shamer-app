@@ -1,7 +1,10 @@
 import 'server-only';
 
 import { cookies } from 'next/headers';
-import { getUserDataBySessionToken, UserData } from '#/data/sessions';
+import {
+  getUserDataBySessionToken,
+  UserData,
+} from '#/domains/user/server/sessions';
 
 export const getSession = async (): Promise<null | UserData> => {
   const shamerSession = cookies().get('shamer_session');

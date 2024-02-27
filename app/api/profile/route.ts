@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { mustSession } from '#/session';
-import { getUserInfo, setUserInfo } from '#/data/user_info';
+import { getUserInfo, setUserInfo } from '#/domains/user/server/user_info';
 
 export const GET = async (req: NextRequest) => {
   const { user_id } = await mustSession();
@@ -17,7 +17,7 @@ export const GET = async (req: NextRequest) => {
   }
 };
 
-export const POST = async (req: NextRequest) => {
+export const PUT = async (req: NextRequest) => {
   const { user_id } = await mustSession();
   const { weight, height, age } = await req.json();
 

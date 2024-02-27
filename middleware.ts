@@ -1,7 +1,7 @@
 // This function can be marked `async` if using `await` inside
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { getUserDataBySessionToken } from '#/data/sessions';
+import { getUserDataBySessionToken } from '#/domains/user/server/sessions';
 import { getSession } from '#/session';
 
 export async function middleware(request: NextRequest) {
@@ -12,17 +12,11 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  const { user_id, user_info_is_filled } = session;
+  const { user_id } = session;
 
   if (!user_id) {
     return NextResponse.redirect(
       new URL('/auth/telegram', request.nextUrl).toString(),
-    );
-  }
-
-  if (!user_info_is_filled && request.nextUrl.pathname !== '/start/profile') {
-    return NextResponse.redirect(
-      new URL('/start/profile', request.nextUrl).toString(),
     );
   }
 

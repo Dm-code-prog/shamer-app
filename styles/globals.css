@@ -24,6 +24,8 @@
     --border: #4b4b4b;
 
     --radius: 0.5rem;
+
+    --destructive: #ff5252;
   }
 }
 
@@ -56,5 +58,7 @@
     --ring: #fff;
 
     --popover: #181818;
+
+    --destructive: #f32f2f;
   }
 }

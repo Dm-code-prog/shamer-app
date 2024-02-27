@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import crypto from 'crypto';
 import { verifyTelegramHmac } from '#/app/api/auth/telegram/hmac';
-import { saveTelegramUser } from '#/data/users';
-import { createSession } from '#/data/sessions';
+import { saveTelegramUser } from '#/domains/user/server/users';
+import { createSession } from '#/domains/user/server/sessions';
 import { cookies } from 'next/headers';
 
 export const POST = async (req: NextRequest) => {

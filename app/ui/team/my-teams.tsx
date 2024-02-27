@@ -1,5 +1,5 @@
 import { mustSession } from '#/session';
-import { getUserTeamsInfo } from '#/data/teams';
+import { getUserTeamsInfo } from '#/domains/team/server/teams';
 import { TeamList } from '#/app/ui/team/team-list';
 
 export const MyTeams = async () => {

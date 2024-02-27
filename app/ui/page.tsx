@@ -13,7 +13,9 @@ export default async function Page() {
     <>
       <div className="flex w-full flex-col justify-center gap-2">
         <div className="flex justify-between">
-          <span className="text-xl">⚙️</span>
+          <Link href="/ui/profile" className="text-xl">
+            ⚙️
+          </Link>
           <span className="text-xl">🏆 100 RP</span>
         </div>
         <div className="flex w-full flex-col items-center justify-center gap-2">
@@ -25,26 +27,27 @@ export default async function Page() {
           <h1 className="text-2xl font-black">@{session.telegram_username}</h1>
         </div>
       </div>
+
       <Card>
         <CardHeader>
-          <h2 className="text-xl font-bold">Activity</h2>
+          <h2 className="text-xl font-bold">Activities</h2>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">Nothing here yet {emoji}</p>
+          <p className="text-muted-foreground">
+            You do not have a team yet. 😔
+          </p>
+          <Button className="mt-4 w-full" asChild>
+            <Link href="/ui/team?type=public">Team up</Link>
+          </Button>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <h2 className="text-xl font-bold">Challenges</h2>
+          <h2 className="text-xl font-bold">Achievements</h2>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
-            You do not have any challenges
-          </p>
-          <Button className="mt-4 w-full" size="lg" asChild>
-            <Link href="/ui/challenges/create">Create challenge</Link>
-          </Button>
+          <p className="text-muted-foreground">Coming soon! {emoji}</p>
         </CardContent>
       </Card>
     </>

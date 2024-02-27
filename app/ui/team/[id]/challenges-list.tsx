@@ -1,4 +1,4 @@
-import { getTeamChallenges } from '#/data/challenges';
+import { getTeamChallenges } from '#/domains/challenge/server/challenges';
 import { Badge } from '#/components/ui/badge';
 import Link from 'next/link';
 

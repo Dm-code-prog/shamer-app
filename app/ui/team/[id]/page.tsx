@@ -1,9 +1,9 @@
-import { getFullTeamInfoByID } from '#/data/teams';
+import { getFullTeamInfoByID } from '#/domains/team/server/teams';
 import { Avatar, AvatarFallback, AvatarImage } from '#/components/ui/avatar';
 import { Card, CardContent } from '#/components/ui/card';
 import React, { Suspense } from 'react';
-import { BackNavigation } from '#/components/ui/back-navigation';
-import { Header } from '#/components/ui/header';
+import { BackNavigation } from '#/components/compound/back-navigation';
+import { Header } from '#/components/compound/header';
 import { mustSession } from '#/session';
 import { Button } from '#/components/ui/button';
 import { Progress } from '#/components/ui/progress';
@@ -20,6 +20,8 @@ export default async function Page({ params }: { params: { id: string } }) {
       <h1 className="m-12 text-4xl font-black text-rose-600">Team not found</h1>
     );
   }
+
+  const createChallengeLink = `/ui/challenges/create?team_id=${teamID}`;
 
   return (
     <>
@@ -57,7 +59,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           size="lg"
           asChild
         >
-          <Link href="/ui/challenges/create">Create challenge</Link>
+          <Link href={createChallengeLink}>Create challenge</Link>
         </Button>
       ) : (
         <Button variant="secondary" className="mt-auto w-full" size="lg">

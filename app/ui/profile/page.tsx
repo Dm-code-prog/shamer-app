@@ -1,7 +1,22 @@
 import { Avatar, AvatarFallback } from '#/components/ui/avatar';
 import { mustSession } from '#/session';
-import { Card, CardContent, CardHeader } from '#/components/ui/card';
-import { getUserProfileByID } from '#/data/users';
+import { getUserProfileByID } from '#/domains/user/server/users';
+import { BackNavigation } from '#/components/compound/back-navigation';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '#/components/ui/drawer';
+import { Button } from '#/components/ui/button';
+import { ScrollArea } from '#/components/ui/scroll-area';
+import { ACTIVITY_TYPES } from '#/app/ui/challenges/create/activity_types';
+import Image from 'next/image';
+import React from 'react';
+import { Info } from '#/app/ui/profile/info';
 
 export default async function Page() {
   const session = await mustSession();
@@ -10,43 +25,40 @@ export default async function Page() {
 
   return (
     <>
-      <Avatar className="h-16 w-16">
-        <AvatarFallback key="fallback" className="text-3xl">
-          {session.emoji}
-        </AvatarFallback>
-      </Avatar>
+      <BackNavigation />
+      <Drawer>
+        <DrawerTrigger>
+          <Avatar className="h-16 w-16">
+            <AvatarFallback key="fallback" className="text-3xl">
+              {session.emoji}
+            </AvatarFallback>
+          </Avatar>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>Here are some exercise options</DrawerTitle>
+          </DrawerHeader>
+          <ScrollArea className="h-[400px] w-full px-8">
+            <div className="flex flex-wrap justify-around gap-8 p-8">
+              {Object.entries(ACTIVITY_TYPES).map(([k, v]) => (
+                <div
+                  key={k}
+                  className="bg-card flex h-24 w-24 items-center justify-center rounded-xl p-4"
+                >
+                  <Image src={v.icon} alt={k} />
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
+          <DrawerFooter>
+            <DrawerClose>
+              <Button variant="ghost">Close</Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
       <h1 className="text-2xl font-black">@{session.telegram_username}</h1>
-      <Card>
-        <CardContent>
-          <div className="bg-muted flex justify-between gap-2 rounded-xl p-4">
-            <div className="flex flex-col items-start">
-              <h2 className="w-full">
-                {profile?.first_name} {profile.last_name}
-              </h2>
-              <p className="text-muted-foreground text-sm">
-                {profile?.age} years old
-              </p>
-            </div>
-          </div>
-          <div className="bg-muted flex justify-between gap-2 rounded-xl px-4">
-            <div className="flex flex-col items-start">
-              <h2 className="w-full">Weight</h2>
-              <p className="text-muted-foreground text-sm">
-                {profile?.weight} kg
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-muted flex justify-between gap-2 rounded-xl p-4">
-            <div className="flex flex-col items-start">
-              <h2 className="w-full">Height</h2>
-              <p className="text-muted-foreground text-sm">
-                {profile?.height} cm
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <Info profile={profile} />
     </>
   );
 }

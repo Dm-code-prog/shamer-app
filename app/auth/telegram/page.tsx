@@ -2,6 +2,10 @@
 import { useEffect } from 'react';
 import { Card, CardContent, CardHeader } from '#/components/ui/card';
 import { useRouter } from 'next/navigation';
+import { ShamerLogo } from '#/components/compound/shamer-logo';
+import { AppDescription } from '#/app/auth/telegram/app-description';
+import { Button } from '#/components/ui/button';
+import Link from 'next/link';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -33,10 +37,9 @@ export default function Page() {
         // @ts-ignore
         body: JSON.stringify({ initData: window?.Telegram?.WebApp?.initData }),
       });
-
       if (res.ok) {
-        await sleep(1000);
-        router.push('/start/profile');
+        await sleep(10000);
+        router.push('/ui');
       }
     };
 
@@ -51,18 +54,11 @@ export default function Page() {
 
   return (
     <>
-      <Card>
-        <CardHeader>
-          <h1 className="text-center text-xl font-black">
-            Verifying your Telegram identity...
-          </h1>
-        </CardHeader>
-        <CardContent>
-          <p className="text-center text-gray-500 dark:text-gray-400">
-            Please wait a bit. We need to do it just once.
-          </p>
-        </CardContent>
-      </Card>
+      <ShamerLogo />
+      <AppDescription />
+      <Button size="lg" className="mt-auto w-64" asChild>
+        <Link href="/ui">Next</Link>
+      </Button>
     </>
   );
 }
