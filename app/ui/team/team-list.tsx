@@ -1,11 +1,5 @@
 import Link from 'next/link';
-
-type Team = {
-  id: number;
-  name: string;
-  members_count: number;
-  rp_total?: number;
-};
+import { Team } from '#/domains/team/types';
 
 type Props = {
   teams: Team[];
@@ -26,7 +20,9 @@ export const TeamList = ({ teams }: Props) => {
               {team.members_count} members
             </p>
           </div>
-          <p>{team.rp_total || 0} RP</p>
+          <p className={team.rp_total > 0 ? 'text-green-500' : 'text-red-500'}>
+            {team.rp_total || 0} RP
+          </p>
         </Link>
       ))}
     </div>

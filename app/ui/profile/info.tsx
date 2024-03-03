@@ -14,20 +14,13 @@ import {
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
+import { UserInfo, UserInfoSchema } from '#/domains/user/types';
 
-const formSchema = z.object({
-  age: z.coerce.number().min(10),
-  weight: z.coerce.number().min(42),
-  height: z.coerce.number().min(120),
-});
-
-type UserProfile = z.infer<typeof formSchema>;
-
-export const Info = ({ profile }: { profile: UserProfile }) => {
+export const Info = ({ profile }: { profile: UserInfo }) => {
   const [isEditing, setIsEditing] = React.useState(false);
 
-  const form = useForm<UserProfile>({
-    resolver: zodResolver(formSchema, {}),
+  const form = useForm<UserInfo>({
+    resolver: zodResolver(UserInfoSchema, {}),
     defaultValues: profile || {},
   });
 
@@ -145,6 +138,7 @@ export const Info = ({ profile }: { profile: UserProfile }) => {
               setIsEditing(true);
             }}
             className="mt-auto w-64"
+            size="lg"
           >
             Edit
           </Button>

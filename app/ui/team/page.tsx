@@ -4,12 +4,15 @@ import { MyTeams } from '#/app/ui/team/my-teams';
 import { PublicTeams } from '#/app/ui/team/public-teams';
 import { Button } from '#/components/ui/button';
 import Link from 'next/link';
+import { mustUser } from '#/domains/user/server/sessions';
 
-export default function Teams({
+export default async function Teams({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | undefined };
 }) {
+  const user = await mustUser();
+
   const defaultTab = searchParams?.type || 'my';
 
   return (
@@ -27,13 +30,13 @@ export default function Teams({
         <TabsContent value="my">
           <Suspense fallback={<div>Loading...</div>}>
             {/* @ts-ignore */}
-            <MyTeams />
+            <MyTeams user_id={user.id} />
           </Suspense>
         </TabsContent>
         <TabsContent value="public">
           <Suspense fallback={<div>Loading...</div>}>
             {/* @ts-ignore */}
-            <PublicTeams />
+            <PublicTeams user_id={user.id} />
           </Suspense>
         </TabsContent>
       </Tabs>

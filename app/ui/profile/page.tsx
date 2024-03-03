@@ -1,6 +1,4 @@
 import { Avatar, AvatarFallback } from '#/components/ui/avatar';
-import { mustSession } from '#/session';
-import { getUserProfileByID } from '#/domains/user/server/users';
 import { BackNavigation } from '#/components/compound/back-navigation';
 import {
   Drawer,
@@ -17,20 +15,20 @@ import { ACTIVITY_TYPES } from '#/app/ui/challenges/create/activity_types';
 import Image from 'next/image';
 import React from 'react';
 import { Info } from '#/app/ui/profile/info';
+import { mustUser } from '#/domains/user/server/sessions';
+import { Header } from '#/components/compound/header';
 
 export default async function Page() {
-  const session = await mustSession();
-
-  const profile = await getUserProfileByID(session.user_id);
+  const user = await mustUser();
 
   return (
-    <>
-      <BackNavigation />
+    <div className="flex w-full flex-grow flex-col items-center gap-4">
+      <Header withBackNavigation />
       <Drawer>
         <DrawerTrigger>
           <Avatar className="h-16 w-16">
             <AvatarFallback key="fallback" className="text-3xl">
-              {session.emoji}
+              {user.emoji}
             </AvatarFallback>
           </Avatar>
         </DrawerTrigger>
@@ -57,8 +55,8 @@ export default async function Page() {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-      <h1 className="text-2xl font-black">@{session.telegram_username}</h1>
-      <Info profile={profile} />
-    </>
+      <h1 className="text-2xl font-black">@{user.telegram_username}</h1>
+      <Info profile={user} />
+    </div>
   );
 }

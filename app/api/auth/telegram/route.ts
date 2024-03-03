@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import crypto from 'crypto';
 import { verifyTelegramHmac } from '#/app/api/auth/telegram/hmac';
 import { saveTelegramUser } from '#/domains/user/server/users';
 import { createSession } from '#/domains/user/server/sessions';

@@ -1,5 +1,23 @@
 import 'server-only';
 import { sql } from '@vercel/postgres';
+import { User } from '#/domains/user/types';
+import { cookies } from 'next/headers';
+
+export const getSession = async (): Promise<User | null> => {
+  const shamerSession = cookies().get('shamer_session');
+  if (!shamerSession) {
+    return null;
+  }
+  return getUserBySessionToken(shamerSession.value);
+};
+
+export const mustUser = async () => {
+  const session = await getSession();
+  if (!session) {
+    throw new Error('No session');
+  }
+  return session;
+};
 
 export const createSession = async (userID: string): Promise<string> => {
   const { rows } = await sql`insert into sessions (user_id, token)
@@ -9,38 +27,42 @@ export const createSession = async (userID: string): Promise<string> => {
   return rows[0].token;
 };
 
-export type UserData = {
-  user_id: string;
-  user_info_is_filled: boolean;
-  emoji: string;
-  telegram_username: string;
-};
-
-export const getUserDataBySessionToken = async (
+export const getUserBySessionToken = async (
   token: string,
-): Promise<UserData> => {
+): Promise<User | null> => {
   const { rows } = await sql`
-      select s.user_id                                                               as user_id,
-             (select not (uf.weight is null or uf.height is null or uf.age is null)) as user_info_is_filled,
+      select u.id,
+             u.first_name,
+             u.last_name,
+             u.telegram_username,
+             u.created_at,
              u.emoji,
-             u.telegram_username
+             uf.age,
+             uf.weight,
+             uf.height,
+             exists(select 1
+                    from user_info
+                    where user_id = u.id)                                    as user_info_is_filled,
+             exists(select 1
+                    from user_teams
+                    where user_id = u.id) or exists(select 1
+                                                    from teams t
+                                                    where t.owner_id = u.id) as has_team,
+             (select total_rp
+              from user_rp
+              where user_id = u.id)                                          as rp_total
       from sessions s
                left join user_info uf
                          on s.user_id = uf.user_id
                left join users u on s.user_id = u.id
+               left join user_teams ut on s.user_id = ut.user_id
       where token = ${token}
         and expires_at > now()
   `;
 
   if (!rows || rows.length === 0) {
-    return {
-      user_id: '',
-      user_info_is_filled: false,
-      emoji: '',
-      telegram_username: '',
-    };
+    return null;
   }
 
-  const { user_id, user_info_is_filled, emoji, telegram_username } = rows[0];
-  return { user_id, user_info_is_filled, emoji, telegram_username };
+  return rows[0] as User;
 };

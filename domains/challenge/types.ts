@@ -1,38 +1,36 @@
-export type Property = {
-  challenge_activity_id: number;
+export type Activity = {
+  id: number;
   type: string;
-  unit: string;
+  units: number;
   n_units: number;
   time: number;
+  weight_coefficient: number;
   is_extra: boolean;
+  is_completed: boolean;
 };
 
-export type BasicChallengeInfo = {
+export type Challenge = {
   id: number;
-  name: string;
-  activity_types: string[];
-};
-
-export type FullChallengeInfo = {
-  id: number;
-  name: string;
-  owner_nickname: string;
-  activity_properties: Property[];
-};
-
-export type CreateChallengeInfo = {
   team_id: number;
+  team_name?: string;
   name: string;
   type: string;
-  properties: Property[];
+  instance_id?: number;
+  start_time: Date;
+  end_time: Date;
+  is_completed: boolean;
+  activities: Activity[];
+  owner?: string;
 };
 
-export type CompletedChallengeActivities = {
-  user_id: string;
-  challenge_activity_ids: number[];
+export type CreateChallengeRequest = {
+  name: string;
+  type: string;
+  team_id: number;
+  activities: Partial<Activity>[];
 };
 
-export type GetCompletedChallengeActivities = {
-  challenge_id: number;
-  user_id: string;
+export type CompleteChallengeActivityRequest = {
+  challenge_instance_id: number;
+  activity_ids: number[];
 };

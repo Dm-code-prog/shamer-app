@@ -1,5 +1,6 @@
 import runningWhite from './assets/running-white.svg';
 import pullupsWhite from './assets/pullups-white.svg';
+import swimmingWhite from './assets/swimming-white.svg';
 
 export const ACTIVITY_TYPES = {
   running: {
@@ -9,5 +10,9 @@ export const ACTIVITY_TYPES = {
   pullups: {
     unit: 'reps',
     icon: pullupsWhite,
+  },
+  swimming: {
+    unit: 'pools',
+    icon: swimmingWhite,
   },
 };

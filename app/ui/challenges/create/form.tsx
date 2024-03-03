@@ -16,28 +16,17 @@ import React from 'react';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-
-import { EditIcon } from '#/components/icons/edit';
 import { Label } from '#/components/ui/label';
+import {
+  Activity,
+  Challenge,
+  CreateChallengeRequest,
+} from '#/domains/challenge/types';
 
 type ActivityType = {
   src: string;
   unit: string;
   name: string;
-};
-
-type Property = {
-  type: string;
-  n_units: number;
-  time: number;
-  is_extra: boolean;
-};
-
-type Challenge = {
-  name: string;
-  type: string;
-  team_id: string;
-  properties: Property[];
 };
 
 export default function CreateChallengeForm({ team_id }: { team_id: string }) {
@@ -51,7 +40,7 @@ export default function CreateChallengeForm({ team_id }: { team_id: string }) {
   const [challengeType, setChallengeType] =
     React.useState<string>('group-daily');
 
-  const [properties, setProperties] = React.useState<Property[]>([
+  const [activities, setActivities] = React.useState<Partial<Activity>[]>([
     {
       type: activityType.name,
       n_units: 0,
@@ -62,14 +51,12 @@ export default function CreateChallengeForm({ team_id }: { team_id: string }) {
 
   const [name, setName] = React.useState<string>('My challenge');
 
-  const [isEditingName, setIsEditingName] = React.useState<boolean>(true);
-
   const save = async () => {
-    const challenge: Challenge = {
+    const challenge: CreateChallengeRequest = {
       name: name,
       type: challengeType,
-      team_id: team_id,
-      properties: properties,
+      team_id: Number(team_id),
+      activities: activities,
     };
 
     const res = await fetch('/api/challenge', {
@@ -88,41 +75,19 @@ export default function CreateChallengeForm({ team_id }: { team_id: string }) {
     }
 
     const data = await res.json();
-    router.push(`/ui/challenges/${data.id}`);
+    router.push(`/ui/challenges/${data.id}?preview=true`);
   };
 
   return (
     <>
-      {isEditingName ? (
-        <div className="flex w-full flex-col items-start gap-4">
-          <Label className="text-2xl font-bold">Challenge name</Label>
-          <Card className="flex flex-col gap-2">
-            <div className="flex">
-              <Input
-                placeholder="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <Button
-                size="sm"
-                variant="link"
-                className="self-end"
-                onClick={() => setIsEditingName(false)}
-              >
-                OK{' '}
-              </Button>
-            </div>
-          </Card>
-        </div>
-      ) : (
-        <div className="relative">
-          <h2 className="text-5xl font-bold">{name}</h2>
-          <EditIcon
-            className="fill-primary-foreground absolute bottom-2 right-[-32px] h-6 w-6"
-            onClick={() => setIsEditingName(true)}
-          />
-        </div>
-      )}
+      <Label className="text-3xl">Name</Label>
+      <Input
+        placeholder="name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <h3 className="text-3xl">Exercises</h3>
       <Card className="flex flex-col items-center p-8">
         <CardContent className="flex w-full flex-col items-center">
           <DrawerSelect
@@ -170,9 +135,9 @@ export default function CreateChallengeForm({ team_id }: { team_id: string }) {
                   <Input
                     placeholder={activityType.unit}
                     className="w-full border-white"
-                    value={properties[0].n_units}
+                    value={activities[0].n_units}
                     onChange={(e) => {
-                      setProperties((prev) => [
+                      setActivities((prev) => [
                         {
                           ...prev[0],
                           n_units: parseFloat(e.target.value) || 0,
@@ -182,9 +147,9 @@ export default function CreateChallengeForm({ team_id }: { team_id: string }) {
                     }}
                   />
                   <Select
-                    value={properties[0].time.toString()}
+                    value={activities[0]?.time?.toString()}
                     onValueChange={(value) => {
-                      setProperties((prev) => [
+                      setActivities((prev) => [
                         {
                           ...prev[0],
                           time: parseFloat(value),

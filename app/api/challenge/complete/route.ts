@@ -1,15 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { completeChallengeActivities } from '#/domains/challenge/server/challenges';
-import { mustSession } from '#/session';
-import { CompletedChallengeActivities } from '#/domains/challenge/types';
+import { mustUser } from '#/domains/user/server/sessions';
+import { CompleteChallengeActivityRequest } from '#/domains/challenge/types';
+import { completeActivities } from '#/domains/challenge/server/challenges';
 
 export const POST = async (request: NextRequest) => {
   try {
-    const session = await mustSession();
-    const body = (await request.json()) as CompletedChallengeActivities;
-    body.user_id = session.user_id;
-    await completeChallengeActivities(body);
-
+    const user = await mustUser();
+    const body = (await request.json()) as CompleteChallengeActivityRequest;
+    await completeActivities({
+      user_id: user.id,
+      challenge_instance_id: body.challenge_instance_id,
+      activity_ids: body.activity_ids,
+    });
     return NextResponse.json({ message: 'Activities completed' });
   } catch (e) {
     console.error(e);

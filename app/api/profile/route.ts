@@ -1,28 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { mustSession } from '#/session';
-import { getUserInfo, setUserInfo } from '#/domains/user/server/user_info';
-
-export const GET = async (req: NextRequest) => {
-  const { user_id } = await mustSession();
-
-  try {
-    const { weight, height, age } = await getUserInfo(user_id);
-    return NextResponse.json({ weight, height, age });
-  } catch (e) {
-    console.error(e);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 },
-    );
-  }
-};
+import { mustUser } from '#/domains/user/server/sessions';
+import { setUserInfo } from '#/domains/user/server/user_info';
 
 export const PUT = async (req: NextRequest) => {
-  const { user_id } = await mustSession();
+  const { id } = await mustUser();
   const { weight, height, age } = await req.json();
 
   try {
-    await setUserInfo({ user_id, weight, height, age });
+    await setUserInfo({ user_id: id, weight, height, age });
   } catch (e) {
     console.error(e);
     return NextResponse.json(

@@ -1,11 +1,11 @@
-import { mustSession } from '#/session';
-import { getUserTeamsInfo } from '#/domains/team/server/teams';
 import { TeamList } from '#/app/ui/team/team-list';
+import { getMyTeams } from '#/domains/team/server/teams';
 
-export const MyTeams = async () => {
-  const session = await mustSession();
+type Props = {
+  user_id: string;
+};
 
-  const myTeams = await getUserTeamsInfo(session.user_id);
-
+export const MyTeams = async ({ user_id }: Props) => {
+  const myTeams = await getMyTeams(user_id);
   return <TeamList teams={myTeams} />;
 };
