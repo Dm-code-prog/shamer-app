@@ -1,17 +1,17 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader } from '#/components/ui/card';
 import { useRouter } from 'next/navigation';
 import { ShamerLogo } from '#/components/compound/shamer-logo';
 import { AppDescription } from '#/app/auth/telegram/app-description';
 import { Button } from '#/components/ui/button';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function Page() {
-  const router = useRouter();
-
+  const [authenticated, setAuthenticated] = useState(false);
   useEffect(() => {
     const lsInitData = localStorage.getItem('initData');
     if (lsInitData) {
@@ -38,8 +38,8 @@ export default function Page() {
         body: JSON.stringify({ initData: window?.Telegram?.WebApp?.initData }),
       });
       if (res.ok) {
-        await sleep(10000);
-        router.push('/ui');
+        setAuthenticated(true);
+        toast.success('Welcome to Shamer!');
       }
     };
 
@@ -56,7 +56,12 @@ export default function Page() {
     <>
       <ShamerLogo />
       <AppDescription />
-      <Button size="lg" className="mt-auto w-64" asChild>
+      <Button
+        size="lg"
+        className="mt-auto w-64"
+        asChild
+        disabled={!authenticated}
+      >
         <Link href="/ui">Next</Link>
       </Button>
     </>

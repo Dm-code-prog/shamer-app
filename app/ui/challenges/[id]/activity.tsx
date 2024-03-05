@@ -5,7 +5,7 @@ import React from 'react';
 
 type ActivityProps = {
   activity: ActivityT;
-  setActivityCompleted: (id: number) => void;
+  setActivityCompleted: (id: number, completed: boolean) => void;
 };
 
 export const ActivityComp = ({
@@ -32,9 +32,7 @@ export const ActivityComp = ({
       <Checkbox
         disabled={activity.is_completed}
         onCheckedChange={(checked) => {
-          if (checked) {
-            setActivityCompleted(activity.id);
-          }
+          setActivityCompleted(activity.id, !!checked);
         }}
       />
     </div>

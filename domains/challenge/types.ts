@@ -3,6 +3,7 @@ export type Activity = {
   type: string;
   units: number;
   n_units: number;
+  met: number;
   time: number;
   weight_coefficient: number;
   is_extra: boolean;

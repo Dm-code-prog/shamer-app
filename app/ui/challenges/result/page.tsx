@@ -30,7 +30,9 @@ export default function Page() {
         </Button>
 
         <Button className="bg-card mt-auto w-32" asChild>
-          <Link href={'/ui'}>Close</Link>
+          <Link href={'/ui'} prefetch={false}>
+            Close
+          </Link>
         </Button>
       </div>
     </>

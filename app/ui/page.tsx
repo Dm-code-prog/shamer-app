@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { Button } from '#/components/ui/button';
 import { mustUser } from '#/domains/user/server/sessions';
 import { ChallengesPreview } from '#/app/ui/challenges-preview';
+import { unstable_noStore as noStore } from 'next/cache';
 
 const emoji = '\u{1F603}';
 
 export default async function Page() {
+  noStore();
   const user = await mustUser();
 
   return (

@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { sql } from '@vercel/postgres';
+import { sql, db } from '@vercel/postgres';
 import {
   Challenge,
   CompleteChallengeActivityRequest,
@@ -25,8 +25,7 @@ export const getTeamChallenges = async (
       from challenges c
                left join challenge_instances ci
                          on c.id = ci.challenge_id
-                             and ci.start_time >= DATE_TRUNC('day', NOW())
-                             and ci.end_time < DATE_TRUNC('day', NOW()) + INTERVAL '1 day'
+                             and ci.start_time < now() and ci.end_time > now()
                left join user_stats us on ci.id = us.challenge_instance_id and us.user_id = ${user_id}
                left join challenge_activities ca on c.id = ca.challenge_id
                left join activity_types at on ca.activity_type_id = at.id
@@ -58,8 +57,7 @@ export const getUserChallenges = async (user_id: string) => {
                left join teams t on c.team_id = t.id
                left join challenge_instances ci
                          on c.id = ci.challenge_id
-                             and ci.start_time >= DATE_TRUNC('day', NOW())
-                             and ci.end_time < DATE_TRUNC('day', NOW()) + INTERVAL '1 day'
+                             and ci.start_time < now() and ci.end_time > now()
                left join user_stats us on ci.id = us.challenge_instance_id and us.user_id = ${user_id}
                left join challenge_activities ca on c.id = ca.challenge_id
                left join activity_types at on ca.activity_type_id = at.id
@@ -82,7 +80,7 @@ export const getChallenge = async (challenge_id: number, user_id: string) => {
              ci.id                                                                      as instance_id,
              json_agg(
                      json_build_object(
-                             'id', ca.id,
+                             'id', ca.id, 'met', at.met,
                              'type', at.name, 'units', at.unit, 'n_units', ca.n_units, 'time', ca.time,
                              'is_extra', ca.is_extra, 'is_completed', exists((select 1
                                                                               from user_stats us
@@ -93,8 +91,7 @@ export const getChallenge = async (challenge_id: number, user_id: string) => {
       from challenges c
                left join challenge_instances ci
                          on c.id = ci.challenge_id
-                             and ci.start_time >= DATE_TRUNC('day', NOW())
-                             and ci.end_time < DATE_TRUNC('day', NOW()) + INTERVAL '1 day'
+                             and ci.start_time < now() and ci.end_time > now()
                left join user_stats us on ci.id = us.challenge_instance_id and us.user_id = ${user_id}
                left join challenge_activities ca on c.id = ca.challenge_id
                left join activity_types at on ca.activity_type_id = at.id

@@ -130,6 +130,7 @@ export const getMyTeams = async (user_id: string): Promise<Team[]> => {
            on
                t.id = ut.team_id
       where ut.user_id = ${user_id}
+         or t.owner_id = ${user_id}
   `;
 
   return rows as Team[];

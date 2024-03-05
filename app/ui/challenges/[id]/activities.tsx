@@ -8,6 +8,7 @@ import {
   CompleteChallengeActivityRequest,
 } from '#/domains/challenge/types';
 import { ActivityComp } from './activity';
+import { rp } from '#/domains/challenge/rp';
 
 type Props = {
   properties: Activity[];
@@ -45,7 +46,14 @@ export const Activities = ({ properties, challenge_instance_id }: Props) => {
     (activity) => !activity.is_completed,
   );
 
-  console.log(completedActivities, 'comp act');
+  const rpForActivities = properties.reduce((acc, activity) => {
+    if (completedActivities.includes(activity.id)) {
+      return (
+        acc + rp(activity.met, activity.time, activity.weight_coefficient, 1)
+      );
+    }
+    return acc;
+  }, 0);
 
   return (
     <div className="flex w-full flex-grow flex-col items-center gap-4">
@@ -53,22 +61,29 @@ export const Activities = ({ properties, challenge_instance_id }: Props) => {
         <ActivityComp
           activity={activity}
           key={activity.id}
-          setActivityCompleted={(id: number) => {
-            if (completedActivities.includes(id)) {
-              setCompletedActivities(
-                completedActivities.filter((activityId) => activityId !== id),
-              );
-            } else {
+          setActivityCompleted={(id: number, completed) => {
+            if (completed) {
               setCompletedActivities([...completedActivities, id]);
+            } else {
+              setCompletedActivities(
+                completedActivities.filter((act) => act !== id),
+              );
             }
           }}
         />
       ))}
 
-      <h2 className="m-2 text-3xl text-green-400">+100 RP</h2>
+      {rpForActivities > 0 && (
+        <h2 className="m-2 text-3xl text-green-400">+{rpForActivities} RP</h2>
+      )}
 
       {hasActivitiesToComplete ? (
-        <Button className="mt-auto w-full" size="lg" onClick={submit}>
+        <Button
+          className="mt-auto w-full"
+          size="lg"
+          onClick={submit}
+          disabled={completedActivities.length === 0}
+        >
           Submit
         </Button>
       ) : (
