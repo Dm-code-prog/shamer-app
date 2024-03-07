@@ -8,9 +8,9 @@ import { Button } from '#/components/ui/button';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export default function Page() {
+  const router = useRouter();
+
   const [authenticated, setAuthenticated] = useState(false);
   useEffect(() => {
     const lsInitData = localStorage.getItem('initData');
@@ -59,10 +59,10 @@ export default function Page() {
       <Button
         size="lg"
         className="mt-auto w-64"
-        asChild
         disabled={!authenticated}
+        onClick={() => router.push('/ui')}
       >
-        <Link href="/ui">Next</Link>
+        Next
       </Button>
     </>
   );

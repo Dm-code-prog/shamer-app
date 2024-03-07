@@ -42,15 +42,9 @@ export const getTeam = async (
                        user_rp.user_id = ut.user_id
               where ut.team_id = t.id) as rp_total,
              exists(select 1
-                    from teams t2
-                             left join
-                         user_teams ut2
-                         on
-                             t2.id = ut2.team_id
-                    where t2.id = t.id
-                        and
-                          ut2.user_id = ${user_id}
-                       or t2.owner_id = ${user_id})
+                    from user_teams
+                    where user_id = ${user_id}
+                      and team_id = t.id) or t.owner_id = ${user_id}
                                        as
                                           current_user_is_member_or_owner
       from teams t
@@ -113,15 +107,9 @@ export const getMyTeams = async (user_id: string): Promise<Team[]> => {
                        user_rp.user_id = ut.user_id
               where ut.team_id = t.id) as rp_total,
              exists(select 1
-                    from teams t2
-                             left join
-                         user_teams ut2
-                         on
-                             t2.id = ut2.team_id
-                    where t2.id = t.id
-                        and
-                          ut2.user_id = ${user_id}
-                       or t2.owner_id = ${user_id})
+                    from user_teams
+                    where user_id = ${user_id}
+                      and team_id = t.id) or t.owner_id = ${user_id}
                                        as
                                           current_user_is_member_or_owner
       from teams t
@@ -152,7 +140,7 @@ export const getPublicTeams = async (
                      ) + 1
               from user_teams ut
               where ut.team_id = t.id)
-                 as
+                                     as
                  members_count,
              (select sum(total_rp)
               from user_rp
@@ -161,19 +149,10 @@ export const getPublicTeams = async (
                    on
                        user_rp.user_id = ut.user_id
               where ut.team_id = t.id)
-                 as
+                                     as
                  rp_total,
-             exists(select 1
-                    from teams t2
-                             left join
-                         user_teams ut2
-                         on
-                             t2.id = ut2.team_id
-                    where t2.id = t.id
-                        and
-                          ut2.user_id = ${user_id}
-                       or t2.owner_id = ${user_id})
-                 as
+             exists(select 1 from user_teams where user_id = ${user_id} and team_id = t.id) or
+             t.owner_id = ${user_id} as
                  current_user_is_member_or_owner
       from teams t
       where t.is_public

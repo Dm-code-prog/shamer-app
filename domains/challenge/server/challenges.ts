@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { sql, db } from '@vercel/postgres';
+import { sql } from '@vercel/postgres';
 import {
   Challenge,
   CompleteChallengeActivityRequest,
@@ -19,9 +19,8 @@ export const getTeamChallenges = async (
              ci.end_time,
              json_agg(
                      json_build_object('type', at.name, 'unit', at.unit, 'n_units', ca.n_units, 'time', ca.time,
-                                       'is_extra', ca.is_extra))                              as activities,
-             sum(case when us.id is not null then 1 else 0 end) = count(distinct ca.id) and sum(us.id) >
-                                                                                            0 as is_completed
+                                       'is_extra', ca.is_extra)) as activities,
+             us.user_id = ${user_id}                             as is_completed
       from challenges c
                left join challenge_instances ci
                          on c.id = ci.challenge_id
@@ -30,13 +29,13 @@ export const getTeamChallenges = async (
                left join challenge_activities ca on c.id = ca.challenge_id
                left join activity_types at on ca.activity_type_id = at.id
       where c.team_id = ${team_id}
-      group by c.id, ci.start_time, ci.end_time
+      group by c.id, ci.start_time, ci.end_time, us.user_id
   `;
 
   return challenges.rows as Challenge[];
 };
 
-export const getUserChallenges = async (user_id: string) => {
+export const getUserChallenges = async (user_id: string, limit = 5) => {
   const challenges = await sql`
       select c.id,
              c.name,
@@ -44,24 +43,25 @@ export const getUserChallenges = async (user_id: string) => {
              c.created_at,
              ci.start_time,
              ci.end_time,
-             t.id                        as team_id,
-             t.name                      as team_name,
+             t.id                    as team_id,
+             t.name                  as team_name,
              json_agg(
                      json_build_object('type', at.name, 'unit', at.unit, 'n_units', ca.n_units, 'time', ca.time,
-                                       'is_extra', ca.is_extra, 'is_completed', exists((select 1
-                                                                                        from user_stats us
-                                                                                        where us.challenge_instance_id = ci.id))
-                     ))                  as activities,
-             count(ca.id) = count(us.id) as is_completed
+                                       'is_extra', ca.is_extra, 'is_completed',
+                                       exists((select 1 from user_stats us where us.challenge_instance_id = ci.id)))
+             )                       as activities,
+             us.user_id = ${user_id} as is_completed
       from challenges c
                left join teams t on c.team_id = t.id
                left join challenge_instances ci
                          on c.id = ci.challenge_id
                              and ci.start_time < now() and ci.end_time > now()
-               left join user_stats us on ci.id = us.challenge_instance_id and us.user_id = ${user_id}
+               left join user_stats us on ci.id = us.challenge_instance_id
                left join challenge_activities ca on c.id = ca.challenge_id
                left join activity_types at on ca.activity_type_id = at.id
-      group by c.id, ci.start_time, ci.end_time, t.id, t.name
+      group by c.id, ci.start_time, ci.end_time, t.id, t.name, us.user_id
+      order by ci.end_time desc
+      limit ${limit}
   `;
 
   return challenges.rows as Challenge[];
@@ -73,11 +73,11 @@ export const getChallenge = async (challenge_id: number, user_id: string) => {
              c.name,
              c.type,
              c.created_at,
-             t.name                                                                     as team_name,
-             t.id                                                                       as team_id,
+             t.name                  as team_name,
+             t.id                    as team_id,
              ci.start_time,
              ci.end_time,
-             ci.id                                                                      as instance_id,
+             ci.id                   as instance_id,
              json_agg(
                      json_build_object(
                              'id', ca.id, 'met', at.met,
@@ -85,9 +85,9 @@ export const getChallenge = async (challenge_id: number, user_id: string) => {
                              'is_extra', ca.is_extra, 'is_completed', exists((select 1
                                                                               from user_stats us
                                                                               where us.challenge_instance_id = ci.id))
-                     ))                                                                 as activities,
-             sum(case when us.id is not null then 1 else 0 end) = count(distinct ca.id) as is_completed,
-             u.telegram_username                                                        as owner
+                     ))              as activities,
+             us.user_id = ${user_id} as is_completed,
+             u.telegram_username     as owner
       from challenges c
                left join challenge_instances ci
                          on c.id = ci.challenge_id
@@ -98,7 +98,7 @@ export const getChallenge = async (challenge_id: number, user_id: string) => {
                left join teams t on c.team_id = t.id
                left join users u on t.owner_id = u.id
       where c.id = ${challenge_id}
-      group by c.id, ci.start_time, ci.end_time, u.telegram_username, t.id, t.name, ci.id
+      group by c.id, ci.start_time, ci.end_time, u.telegram_username, t.id, t.name, ci.id, us.user_id
   `;
 
   return challenge.rows[0] as Challenge;

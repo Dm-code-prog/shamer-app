@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
 
-export const useCounter = (startPoint?: Date) => {
+export const useCounter = (utcStartPoint?: Date) => {
   const [time, setTime] = useState<string>('');
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (startPoint) {
+      if (utcStartPoint) {
+        // Assuming utcStartPoint is given in UTC, convert it to the local time zone
+        const localStartPoint = new Date(
+          utcStartPoint.getTime() - utcStartPoint.getTimezoneOffset() * 60000,
+        );
+
         const now = new Date();
-        const timeDiff = startPoint.getTime() - now.getTime();
+        const timeDiff = localStartPoint.getTime() - now.getTime();
 
         // Time calculations
         const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
@@ -15,7 +20,7 @@ export const useCounter = (startPoint?: Date) => {
         const minutes = Math.floor((timeDiff / 1000 / 60) % 60);
         const seconds = Math.floor((timeDiff / 1000) % 60);
 
-        // Formatting time based on the length
+        // Formatting time
         if (days > 0) {
           setTime(`${days} days`);
         } else if (hours > 0) {
@@ -33,8 +38,9 @@ export const useCounter = (startPoint?: Date) => {
         }
       }
     }, 1000);
+
     return () => clearInterval(interval);
-  }, [startPoint]);
+  }, [utcStartPoint]);
 
   return time;
 };
