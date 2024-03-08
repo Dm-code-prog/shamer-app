@@ -6,6 +6,7 @@ import { ChallengesList } from '#/app/ui/team/[id]/challenges-list';
 import Link from 'next/link';
 import { mustUser } from '#/domains/user/server/sessions';
 import { getTeam, getTeamMembers } from '#/domains/team/server/teams';
+import { Join } from '#/app/ui/team/[id]/join';
 
 export default async function Page({ params }: { params: { id: string } }) {
   const user = await mustUser();
@@ -78,9 +79,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           <Link href={createChallengeLink}>Create challenge</Link>
         </Button>
       ) : (
-        <Button variant="secondary" className="mt-auto w-full" size="lg">
-          Join team
-        </Button>
+        <Join team_id={teamID} />
       )}
     </>
   );

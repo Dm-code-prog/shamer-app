@@ -23,3 +23,9 @@ export const CreateTeamRequestSchema = z.object({
 });
 
 export type CreateTeamRequest = z.infer<typeof CreateTeamRequestSchema>;
+
+export const JoinTeamRequestSchema = z.object({
+  team_id: z.number(),
+});
+
+export type JoinTeamRequest = z.infer<typeof JoinTeamRequestSchema>;

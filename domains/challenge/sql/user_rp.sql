@@ -1,11 +1,11 @@
 create materialized view user_rp as
-select ut.user_id,
+select us.user_id,
        round(sum(at.met * 70 * ca.time * coalesce(ca.weight_coefficient, 1) * coalesce(at.base_weight, 1)) /
              10) as total_rp
-from user_stats ut
-         left join challenge_activities ca on ut.challenge_activity_id = ca.id
+from user_stats us
+         left join challenge_activities ca on us.challenge_activity_id = ca.id
          left join activity_types at on ca.activity_type_id = at.id
-group by ut.user_id;
+group by us.user_id;
 
 
 

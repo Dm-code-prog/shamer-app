@@ -3,6 +3,8 @@ import type { Challenge as ChallengeT } from '#/domains/challenge/types';
 import Link from 'next/link';
 import { Badge } from '#/components/ui/badge';
 import { useCounter } from '#/hooks/useCounter';
+import { ACTIVITY_TYPES } from '#/app/ui/challenges/create/activity_types';
+import Image from 'next/image';
 
 type ChallengeProps = {
   challenge: ChallengeT;
@@ -15,8 +17,10 @@ export const Challenge = ({ challenge }: ChallengeProps) => {
 
   if (challenge.is_completed) {
     // add a green animated border
-    cardClasses += ' border-green-500 border-4 animate-pulse';
+    cardClasses += ' opacity-50';
   }
+  // @ts-ignore
+  const icon = ACTIVITY_TYPES[a.type].icon.src;
 
   return (
     <Link
@@ -24,17 +28,21 @@ export const Challenge = ({ challenge }: ChallengeProps) => {
       className={cardClasses}
       href={`/ui/challenges/${challenge.id}`}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex w-[120px] items-center justify-between gap-2">
         <h3 key={challenge.id} className="text-xl">
           {challenge.name}
         </h3>
         {challenge.activities.map((a) => (
-          <Badge key={a.type} variant="outline" className="ml-2 font-normal">
-            {a.type}
-          </Badge>
+          <Image key={a.id} src={icon} alt={a.type} width={32} height={32} />
         ))}
       </div>
-      <p>ends in {endsAt} </p>
+      {challenge.is_completed ? (
+        <Badge variant="outline" className="text-md text-green-400">
+          Completed
+        </Badge>
+      ) : (
+        <p>ends in {endsAt} </p>
+      )}
     </Link>
   );
 };

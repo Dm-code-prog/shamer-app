@@ -4,6 +4,7 @@ import { sql } from '@vercel/postgres';
 import {
   Challenge,
   CompleteChallengeActivityRequest,
+  UserAllTimeActivityResult,
 } from '#/domains/challenge/types';
 
 export const getTeamChallenges = async (
@@ -181,4 +182,56 @@ export const populateChallengeInstances = async (
     
     `;
   }
+};
+
+type StatDates = {
+  date: Date;
+  day_of_activity: Date;
+};
+
+export const getUserDailyStreak = async (user_id: string): Promise<number> => {
+  const res = await sql`
+      with distincs_dates as (select distinct Date(created_at) as day_of_activity
+                              from user_stats
+                              where user_id = ${user_id}),
+           all_dates as (select generate_series(min(created_at), now(), interval '1 day')::date as date
+                         from user_stats)
+      select date, day_of_activity
+      from all_dates
+               left join distincs_dates on all_dates.date = distincs_dates.day_of_activity
+      order by date desc;
+  `;
+
+  const rows = res.rows as StatDates[];
+
+  // go over the stat dates and find the longest streak.
+  // streak ends when day_of_activity is nullish
+
+  let streak = 0;
+  let should_break = false;
+  rows.forEach((r, index) => {
+    if (should_break) return;
+    if (!!r.day_of_activity) {
+      streak += 1;
+    } else if (index !== 0) {
+      should_break = true;
+    }
+  });
+
+  return streak;
+};
+
+export const getUserAllTimeActivityStats = async (
+  user_id: string,
+): Promise<UserAllTimeActivityResult[]> => {
+  const res = await sql`
+      select at.id, at.name, sum(ca.n_units), at.unit
+      from user_stats us
+               join challenge_activities ca on ca.id = us.challenge_activity_id
+               join activity_types at on ca.activity_type_id = at.id
+      where us.user_id = ${user_id}
+      group by at.id, at.name, at.unit
+  `;
+
+  return res.rows as UserAllTimeActivityResult[];
 };

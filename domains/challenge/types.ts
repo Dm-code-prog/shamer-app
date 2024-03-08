@@ -35,3 +35,10 @@ export type CompleteChallengeActivityRequest = {
   challenge_instance_id: number;
   activity_ids: number[];
 };
+
+export type UserAllTimeActivityResult = {
+  id: number;
+  name: string;
+  sum: number;
+  unit: string;
+};

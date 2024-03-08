@@ -16,6 +16,17 @@ export const createTeam = async ({
   return rows[0].id;
 };
 
+export const joinTeam = async (
+  team_id: number,
+  user_id: string,
+): Promise<void> => {
+  const { rows } = await sql`
+      insert into user_teams (team_id, user_id)
+      values (${team_id}, ${user_id})
+  `;
+  return rows[0].id;
+};
+
 export const getTeam = async (
   team_id: number,
   user_id: string,
@@ -32,22 +43,17 @@ export const getTeam = async (
                      ) + 1
               from user_teams ut
               where ut.team_id = t.id)
-                                       as
-                                          members_count,
-             (select sum(total_rp)
-              from user_rp
-                       left join
-                   user_teams ut
-                   on
-                       user_rp.user_id = ut.user_id
-              where ut.team_id = t.id) as rp_total,
+                          as
+                             members_count,
+             trp.total_rp as rp_total,
              exists(select 1
                     from user_teams
                     where user_id = ${user_id}
                       and team_id = t.id) or t.owner_id = ${user_id}
-                                       as
-                                          current_user_is_member_or_owner
+                          as
+                             current_user_is_member_or_owner
       from teams t
+               left join team_rp trp on t.id = trp.id
       where t.id = ${team_id}
   `;
 
@@ -99,13 +105,7 @@ export const getMyTeams = async (user_id: string): Promise<Team[]> => {
               where ut.team_id = t.id)
                                        as
                                           members_count,
-             (select sum(total_rp)
-              from user_rp
-                       left join
-                   user_teams ut
-                   on
-                       user_rp.user_id = ut.user_id
-              where ut.team_id = t.id) as rp_total,
+             coalesce(trp.total_rp, 0) as rp_total,
              exists(select 1
                     from user_teams
                     where user_id = ${user_id}
@@ -117,8 +117,10 @@ export const getMyTeams = async (user_id: string): Promise<Team[]> => {
            user_teams ut
            on
                t.id = ut.team_id
+               left join team_rp trp on t.id = trp.id
       where ut.user_id = ${user_id}
          or t.owner_id = ${user_id}
+      order by coalesce(trp.total_rp, 0) desc
   `;
 
   return rows as Team[];
@@ -140,22 +142,18 @@ export const getPublicTeams = async (
                      ) + 1
               from user_teams ut
               where ut.team_id = t.id)
-                                     as
+                                       as
                  members_count,
-             (select sum(total_rp)
-              from user_rp
-                       left join
-                   user_teams ut
-                   on
-                       user_rp.user_id = ut.user_id
-              where ut.team_id = t.id)
-                                     as
+             coalesce(trp.total_rp, 0) as
                  rp_total,
              exists(select 1 from user_teams where user_id = ${user_id} and team_id = t.id) or
-             t.owner_id = ${user_id} as
+             t.owner_id = ${user_id}   as
                  current_user_is_member_or_owner
       from teams t
+               left join team_rp trp on t.id = trp.id
       where t.is_public
+      order by coalesce(trp.total_rp, 0) desc
+
       limit ${limit}
   `;
 
