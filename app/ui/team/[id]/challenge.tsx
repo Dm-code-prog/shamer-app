@@ -19,9 +19,6 @@ export const Challenge = ({ challenge }: ChallengeProps) => {
     // add a green animated border
     cardClasses += ' opacity-50';
   }
-  // @ts-ignore
-  const icon = ACTIVITY_TYPES[a.type].icon.src;
-
   return (
     <Link
       key={challenge.id}
@@ -32,9 +29,13 @@ export const Challenge = ({ challenge }: ChallengeProps) => {
         <h3 key={challenge.id} className="text-xl">
           {challenge.name}
         </h3>
-        {challenge.activities.map((a) => (
-          <Image key={a.id} src={icon} alt={a.type} width={32} height={32} />
-        ))}
+        {challenge.activities.map((a) => {
+          // @ts-ignore
+          const icon = ACTIVITY_TYPES[a.type].icon.src;
+          return (
+            <Image key={a.id} src={icon} alt={a.type} width={32} height={32} />
+          );
+        })}
       </div>
       {challenge.is_completed ? (
         <Badge variant="outline" className="text-md text-green-400">
