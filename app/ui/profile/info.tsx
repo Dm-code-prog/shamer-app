@@ -15,8 +15,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 import { UserInfo, UserInfoSchema } from '#/domains/user/types';
+import { useRouter } from 'next/navigation';
 
 export const Info = ({ profile }: { profile: UserInfo }) => {
+  const router = useRouter();
+
   const [isEditing, setIsEditing] = React.useState(false);
 
   const form = useForm<UserInfo>({
@@ -34,6 +37,7 @@ export const Info = ({ profile }: { profile: UserInfo }) => {
     }
 
     toast.success('Profile saved');
+    router.refresh();
     setIsEditing(false);
   });
 

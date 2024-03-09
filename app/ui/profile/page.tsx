@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback } from '#/components/ui/avatar';
-import { BackNavigation } from '#/components/compound/back-navigation';
 import {
   Drawer,
   DrawerClose,

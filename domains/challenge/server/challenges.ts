@@ -20,8 +20,9 @@ export const getTeamChallenges = async (
              ci.end_time,
              json_agg(
                      json_build_object('type', at.name, 'unit', at.unit, 'n_units', ca.n_units, 'time', ca.time,
-                                       'is_extra', ca.is_extra)) as activities,
-             us.user_id = ${user_id}                             as is_completed
+                                       'is_extra', ca.is_extra, 'is_completed',
+                                       exists((select 1 from user_stats us where us.challenge_instance_id = ci.id)))) as activities,
+             us.user_id = ${user_id}                                                                                  as is_completed
       from challenges c
                left join challenge_instances ci
                          on c.id = ci.challenge_id
@@ -35,10 +36,26 @@ export const getTeamChallenges = async (
   
   `;
 
-  return challenges.rows as Challenge[];
+  const res = challenges.rows as Challenge[];
+
+  res.forEach((r) => {
+    let completed = true;
+    r.activities.forEach((a) => {
+      if (!a.is_completed) {
+        completed = false;
+      }
+    });
+
+    r.is_completed = completed;
+  });
+
+  return res;
 };
 
-export const getUserChallenges = async (user_id: string, limit = 5) => {
+export const getUserChallenges = async (
+  user_id: string,
+  limit = 5,
+): Promise<Challenge[]> => {
   const challenges = await sql`
       select c.id,
              c.name,
@@ -67,11 +84,24 @@ export const getUserChallenges = async (user_id: string, limit = 5) => {
       limit ${limit}
   `;
 
-  return challenges.rows as Challenge[];
+  const res = challenges.rows as Challenge[];
+
+  res.forEach((r) => {
+    let completed = true;
+    r.activities.forEach((a) => {
+      if (!a.is_completed) {
+        completed = false;
+      }
+    });
+
+    r.is_completed = completed;
+  });
+
+  return res;
 };
 
 export const getChallenge = async (challenge_id: number, user_id: string) => {
-  const challenge = await sql`
+  const res = await sql`
       select c.id,
              c.name,
              c.type,
@@ -104,7 +134,7 @@ export const getChallenge = async (challenge_id: number, user_id: string) => {
       group by c.id, ci.start_time, ci.end_time, u.telegram_username, t.id, t.name, ci.id, us.user_id
   `;
 
-  return challenge.rows[0] as Challenge;
+  return res.rows[0] as Challenge;
 };
 
 export const createChallenge = async (

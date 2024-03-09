@@ -39,7 +39,7 @@ export const Activities = ({ properties, challenge_instance_id }: Props) => {
     }
 
     toast.success('Activities submitted');
-    router.push('/ui/challenges/result?rp=120');
+    router.push(`/ui/challenges/result?rp=${rpForActivities}`);
   };
 
   const hasActivitiesToComplete = properties.some(
