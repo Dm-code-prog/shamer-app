@@ -19,13 +19,16 @@ export const Challenge = ({ challenge }: ChallengeProps) => {
     // add a green animated border
     cardClasses += ' opacity-50';
   }
+
+  console.log('challenge', challenge);
+
   return (
     <Link
       key={challenge.id}
       className={cardClasses}
       href={`/ui/challenges/${challenge.id}`}
     >
-      <div className="flex w-[120px] items-center justify-between gap-2">
+      <div className="flex items-center justify-between gap-2">
         <h3 key={challenge.id} className="text-xl">
           {challenge.name}
         </h3>

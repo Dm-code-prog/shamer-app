@@ -17,7 +17,6 @@ export default async function Teams({
 
   return (
     <div className="flex h-full w-full flex-grow flex-col gap-4">
-      <h1 className="text-3xl font-bold">Teams</h1>
       <Tabs defaultValue={defaultTab} className="w-full">
         <TabsList className="w-full">
           <TabsTrigger value="my" className="w-full">

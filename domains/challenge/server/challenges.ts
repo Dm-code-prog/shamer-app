@@ -31,6 +31,8 @@ export const getTeamChallenges = async (
                left join activity_types at on ca.activity_type_id = at.id
       where c.team_id = ${team_id}
       group by c.id, ci.start_time, ci.end_time, us.user_id
+      order by is_completed desc, ci.end_time desc
+  
   `;
 
   return challenges.rows as Challenge[];
@@ -61,7 +63,7 @@ export const getUserChallenges = async (user_id: string, limit = 5) => {
                left join challenge_activities ca on c.id = ca.challenge_id
                left join activity_types at on ca.activity_type_id = at.id
       group by c.id, ci.start_time, ci.end_time, t.id, t.name, us.user_id
-      order by ci.end_time desc
+      order by is_completed desc, ci.end_time desc
       limit ${limit}
   `;
 
@@ -234,4 +236,16 @@ export const getUserAllTimeActivityStats = async (
   `;
 
   return res.rows as UserAllTimeActivityResult[];
+};
+
+export const getUserDaysOfActivity = async (
+  user_id: string,
+): Promise<string[]> => {
+  const res = await sql`
+      select distinct to_char(Date(created_at), 'YYYY-MM-DD') as day_of_activity
+      from user_stats
+      where user_id = ${user_id}
+  `;
+
+  return res.rows.map((r) => r.day_of_activity) as string[];
 };

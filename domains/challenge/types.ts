@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 export type Activity = {
   id: number;
   type: string;
@@ -24,12 +26,23 @@ export type Challenge = {
   owner?: string;
 };
 
-export type CreateChallengeRequest = {
-  name: string;
-  type: string;
-  team_id: number;
-  activities: Partial<Activity>[];
-};
+export const CreateChallengeRequestSchema = z.object({
+  name: z.string(),
+  type: z.string(),
+  team_id: z.number(),
+  activities: z.array(
+    z.object({
+      type: z.string(),
+      n_units: z.number(),
+      time: z.number(),
+      is_extra: z.boolean(),
+    }),
+  ),
+});
+
+export type CreateChallengeRequest = z.infer<
+  typeof CreateChallengeRequestSchema
+>;
 
 export type CompleteChallengeActivityRequest = {
   challenge_instance_id: number;

@@ -17,11 +17,7 @@ import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { Label } from '#/components/ui/label';
-import {
-  Activity,
-  Challenge,
-  CreateChallengeRequest,
-} from '#/domains/challenge/types';
+import { Activity, CreateChallengeRequest } from '#/domains/challenge/types';
 
 type ActivityType = {
   src: string;
@@ -56,6 +52,7 @@ export default function CreateChallengeForm({ team_id }: { team_id: string }) {
       name: name,
       type: challengeType,
       team_id: Number(team_id),
+      // @ts-ignore
       activities: activities,
     };
 
@@ -77,6 +74,8 @@ export default function CreateChallengeForm({ team_id }: { team_id: string }) {
     const data = await res.json();
     router.push(`/ui/challenges/${data.id}?preview=true`);
   };
+
+  console.log(activities, 'activities');
 
   return (
     <>
@@ -105,6 +104,12 @@ export default function CreateChallengeForm({ team_id }: { team_id: string }) {
               } satisfies ActivityType;
 
               setActivityType(activityType);
+              setActivities((prev) => [
+                {
+                  ...prev[0],
+                  type: activityType.name,
+                },
+              ]);
             }}
           >
             {activityType.src ? (
