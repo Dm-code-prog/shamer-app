@@ -15,3 +15,5 @@ alter table activity_types
     drop constraint activity_types_base_weight_check;
 
 alter type unit_type add value 'pools';
+
+alter type unit_type add value 'min';

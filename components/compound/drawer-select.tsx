@@ -58,7 +58,13 @@ export const DrawerSelect = ({ children, title, items, onSelect }: Props) => {
                 }}
                 className="bg-card flex h-24 w-24 items-center justify-center rounded-xl p-4"
               >
-                {item.src && <Image src={item.src} alt={item.text || ''} />}
+                {item.src && (
+                  <Image
+                    className="h-24 w-24"
+                    src={item.src}
+                    alt={item.text || ''}
+                  />
+                )}
                 {item.text && <span>{item.text}</span>}
               </div>
             ))}

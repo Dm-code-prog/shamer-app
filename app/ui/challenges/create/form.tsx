@@ -17,7 +17,11 @@ import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { Label } from '#/components/ui/label';
-import { Activity, CreateChallengeRequest } from '#/domains/challenge/types';
+import {
+  Activity,
+  CreateChallengeRequest,
+  CreateChallengeRequestSchema,
+} from '#/domains/challenge/types';
 
 type ActivityType = {
   src: string;
@@ -48,31 +52,37 @@ export default function CreateChallengeForm({ team_id }: { team_id: string }) {
   const [name, setName] = React.useState<string>('My challenge');
 
   const save = async () => {
-    const challenge: CreateChallengeRequest = {
-      name: name,
-      type: challengeType,
-      team_id: Number(team_id),
-      // @ts-ignore
-      activities: activities,
-    };
+    try {
+      const challenge: CreateChallengeRequest = {
+        name: name,
+        type: challengeType,
+        team_id: Number(team_id),
+        // @ts-ignore
+        activities: activities,
+      };
 
-    const res = await fetch('/api/challenge', {
-      method: 'POST',
-      body: JSON.stringify(challenge),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+      CreateChallengeRequestSchema.parse(challenge);
 
-    if (res.ok) {
-      toast.success('Challenge created');
-    } else {
-      toast.error('Error creating challenge');
-      return;
+      const res = await fetch('/api/challenge', {
+        method: 'POST',
+        body: JSON.stringify(challenge),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (res.ok) {
+        toast.success('Challenge created');
+      } else {
+        toast.error('Error creating challenge');
+        return;
+      }
+
+      const data = await res.json();
+      router.push(`/ui/challenges/${data.id}?preview=true`);
+    } catch (e) {
+      toast.error('Something went wrong!');
     }
-
-    const data = await res.json();
-    router.push(`/ui/challenges/${data.id}?preview=true`);
   };
 
   console.log(activities, 'activities');

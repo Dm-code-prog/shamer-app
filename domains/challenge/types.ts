@@ -28,11 +28,11 @@ export type Challenge = {
 
 export const CreateChallengeRequestSchema = z.object({
   name: z.string(),
-  type: z.string(),
+  type: z.string().min(4),
   team_id: z.number(),
   activities: z.array(
     z.object({
-      type: z.string(),
+      type: z.string().min(4),
       n_units: z.number(),
       time: z.number(),
       is_extra: z.boolean(),

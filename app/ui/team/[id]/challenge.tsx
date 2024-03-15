@@ -34,7 +34,7 @@ export const Challenge = ({ challenge }: ChallengeProps) => {
         </h3>
         {challenge.activities.map((a) => {
           // @ts-ignore
-          const icon = ACTIVITY_TYPES[a.type].icon.src;
+          const icon = ACTIVITY_TYPES?.[a.type]?.icon?.src;
           return (
             <Image key={a.id} src={icon} alt={a.type} width={32} height={32} />
           );

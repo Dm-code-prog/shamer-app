@@ -13,6 +13,13 @@ export default function Page() {
 
   const [authenticated, setAuthenticated] = useState(false);
   useEffect(() => {
+    fetch('/api/auth/impersonate', {
+      method: 'POST',
+    }).then(() => {
+      toast.success('authenticated in development mode.');
+    });
+    return;
+
     const lsInitData = localStorage.getItem('initData');
     if (lsInitData) {
       // Only for testing purposes in a browser
