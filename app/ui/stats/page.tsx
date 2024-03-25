@@ -41,7 +41,6 @@ export default async function Page() {
           if (!type) {
             return null;
           }
-          // @ts-ignore
           return (
             <Card key={a.id}>
               <div className="flex items-center justify-start gap-4">
