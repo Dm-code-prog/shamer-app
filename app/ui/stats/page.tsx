@@ -33,14 +33,21 @@ export default async function Page() {
       <div className="flex w-full flex-col items-center gap-4">
         <h2 className="text-primary mt-8 text-4xl">All time results</h2>
         {allTimeStats.map((a) => {
+          const types = Object.entries(ACTIVITY_TYPES).find(
+            ([key, value]) => value.name === a.name,
+          );
+
+          const type = types?.[1];
+          if (!type) {
+            return null;
+          }
           // @ts-ignore
-          const icon = ACTIVITY_TYPES[a.name].icon.src;
           return (
             <Card key={a.id}>
               <div className="flex items-center justify-start gap-4">
                 <Image
                   key={a.id}
-                  src={icon}
+                  src={type.icon.src}
                   alt={a.name}
                   width={32}
                   height={32}
