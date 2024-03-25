@@ -1,7 +1,10 @@
 import { Avatar, AvatarFallback } from '#/components/ui/avatar';
 import { Activities } from '#/app/ui/challenges/[id]/activities';
 import { mustUser } from '#/domains/user/server/sessions';
-import { getChallenge } from '#/domains/challenge/server/challenges';
+import {
+  canIViewChallenge,
+  getChallenge,
+} from '#/domains/challenge/server/challenges';
 import { Button } from '#/components/ui/button';
 import Link from 'next/link';
 
@@ -13,10 +16,25 @@ export default async function Page({
   searchParams: { preview: boolean };
 }) {
   const user = await mustUser();
+
   const challenge = await getChallenge(Number(params.id), user.id);
 
   if (!challenge) {
     return <h1 className="text-primary text-4xl">Challenge not found</h1>;
+  }
+
+  const authorized = await canIViewChallenge(Number(params.id), user.id);
+  if (!authorized) {
+    return (
+      <>
+        <h1 className="text-primary text-4xl">
+          Oops. You are not allowed to view this challenge
+        </h1>
+        <h2 className=" text-2xl font-light">
+          You can only view challenges of your team
+        </h2>
+      </>
+    );
   }
 
   return (

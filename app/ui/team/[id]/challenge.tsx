@@ -20,8 +20,6 @@ export const Challenge = ({ challenge }: ChallengeProps) => {
     cardClasses += ' opacity-50';
   }
 
-  console.log('challenge', challenge);
-
   return (
     <Link
       key={challenge.id}
@@ -33,10 +31,23 @@ export const Challenge = ({ challenge }: ChallengeProps) => {
           {challenge.name}
         </h3>
         {challenge.activities.map((a) => {
-          // @ts-ignore
-          const icon = ACTIVITY_TYPES?.[a.type]?.icon?.src;
+          const types = Object.entries(ACTIVITY_TYPES).find(
+            ([key, value]) => value.name === a.type,
+          );
+
+          const type = types?.[1];
+          if (!type) {
+            return null;
+          }
+
           return (
-            <Image key={a.id} src={icon} alt={a.type} width={32} height={32} />
+            <Image
+              key={a.id}
+              src={type.icon}
+              alt={a.type}
+              width={32}
+              height={32}
+            />
           );
         })}
       </div>

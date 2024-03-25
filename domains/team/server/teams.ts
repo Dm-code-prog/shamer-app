@@ -12,7 +12,14 @@ export const createTeam = async ({
   const { rows } = await sql`
       insert into teams (name, description, is_public, owner_id, emoji)
       values (${name}, ${description}, ${is_public}, ${user_id}, ${emoji})
+      returning id
   `;
+
+  await sql`
+      insert into user_teams (team_id, user_id)
+      values (${rows[0].id}, ${user_id})
+  `;
+
   return rows[0].id;
 };
 
@@ -40,7 +47,7 @@ export const getTeam = async (
              t.owner_id,
              t.emoji,
              (select count(*
-                     ) + 1
+                     )
               from user_teams ut
               where ut.team_id = t.id)
                           as
@@ -75,16 +82,6 @@ export const getTeamMembers = async (team_id: number): Promise<User[]> => {
            on
                u.id = ut.user_id
       where ut.team_id = ${team_id}
-
-      union
-
-      select u.id,
-             u.telegram_username,
-             u.emoji
-      from users u
-      where u.id = (select owner_id
-                    from teams
-                    where id = ${team_id})
   `;
 
   return rows as User[];
@@ -139,7 +136,7 @@ export const getPublicTeams = async (
              t.owner_id,
              t.emoji,
              (select count(*
-                     ) + 1
+                     )
               from user_teams ut
               where ut.team_id = t.id)
                                        as

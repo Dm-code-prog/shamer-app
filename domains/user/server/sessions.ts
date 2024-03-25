@@ -41,9 +41,6 @@ export const getUserBySessionToken = async (
              uf.weight,
              uf.height,
              exists(select 1
-                    from user_info
-                    where user_id = u.id)                                    as user_info_is_filled,
-             exists(select 1
                     from user_teams
                     where user_id = u.id) or exists(select 1
                                                     from teams t
@@ -64,5 +61,8 @@ export const getUserBySessionToken = async (
     return null;
   }
 
-  return rows[0] as User;
+  const res = rows[0] as User;
+  res.user_info_is_filled = !(!res.weight || !res.height || !res.age);
+
+  return res;
 };

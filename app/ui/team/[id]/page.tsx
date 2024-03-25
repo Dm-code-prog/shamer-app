@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
         <div className="ml-auto flex flex-col items-center">
           <h2 className="text-4xl leading-8">💎</h2>
-          <p className="text-gray-600">+{teamInfo.rp_total} RP</p>
+          <p className="text-gray-600">+{teamInfo.rp_total || 0} RP</p>
         </div>
       </div>
       <div className="flex w-full items-start gap-2 rounded-xl">

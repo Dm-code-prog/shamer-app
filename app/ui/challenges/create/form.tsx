@@ -108,7 +108,8 @@ export default function CreateChallengeForm({ team_id }: { team_id: string }) {
             onSelect={({ src, value, text }) => {
               const activityType = {
                 src: src!,
-                name: value,
+                // @ts-ignore
+                name: ACTIVITY_TYPES[value].name,
                 // @ts-ignore
                 unit: ACTIVITY_TYPES[value].unit,
               } satisfies ActivityType;

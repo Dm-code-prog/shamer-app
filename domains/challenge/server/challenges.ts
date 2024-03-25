@@ -7,6 +7,23 @@ import {
   UserAllTimeActivityResult,
 } from '#/domains/challenge/types';
 
+// performs authZ check
+export const canIViewChallenge = async (
+  challenge_id: number,
+  user_id: string,
+): Promise<boolean> => {
+  const res = await sql`
+      select exists(select 1
+                    from challenges c
+                             left join teams t on c.team_id = t.id
+                             left join user_teams ut on t.id = ut.team_id
+                    where c.id = ${challenge_id}
+                      and (t.owner_id = ${user_id} or ut.user_id = ${user_id}))
+  `;
+
+  return res.rows[0].exists;
+};
+
 export const getTeamChallenges = async (
   team_id: number,
   user_id: string,

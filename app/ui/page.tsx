@@ -19,7 +19,7 @@ export default async function Page() {
           <Link href="/ui/profile" className="text-xl">
             ⚙️
           </Link>
-          <span className="text-xl">🏆 {user.rp_total} RP</span>
+          <span className="text-xl">🏆 {user.rp_total || 0} RP</span>
         </div>
         <div className="flex w-full flex-col items-center justify-center gap-2">
           <Avatar className="h-16 w-16">
@@ -34,7 +34,7 @@ export default async function Page() {
       {!user.has_team && (
         <Card>
           <CardHeader>
-            <h2 className="text-xl font-bold">Activities</h2>
+            <h2 className="text-2xl">Teams</h2>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
@@ -47,17 +47,33 @@ export default async function Page() {
         </Card>
       )}
 
-      {/*@ts-ignore */}
-      <ChallengesPreview user_id={user.id} />
+      {!user.user_info_is_filled && (
+        <Card>
+          <CardHeader>
+            <h2 className="text-2xl">Complete your profile</h2>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">
+              You have not completed your profile yet. 😔
+            </p>
+            <Button className="mt-4 w-full" asChild>
+              <Link href="/ui/profile">Complete profile</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader>
-          <h2 className="text-xl font-bold">Achievements</h2>
+          <h2 className="text-2xl">Achievements</h2>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground">Coming soon! {emoji}</p>
         </CardContent>
       </Card>
+
+      {/*@ts-ignore */}
+      <ChallengesPreview user_id={user.id} />
     </>
   );
 }
