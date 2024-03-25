@@ -13,7 +13,7 @@ type ChallengeProps = {
 export const Challenge = ({ challenge }: ChallengeProps) => {
   const endsAt = useCounter(challenge.end_time);
   let cardClasses =
-    'bg-muted flex w-full items-center justify-between gap-4 rounded-xl p-4';
+    'bg-muted flex w-full items-center justify-between gap-4 rounded-xl p-4 px-8';
 
   if (challenge.is_completed) {
     // add a green animated border
