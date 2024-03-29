@@ -1,0 +1,12 @@
+{
+  "streak": {
+    "streak": "streak",
+    "days": "days"
+  },
+  "activity": {
+    "title": "Activity"
+  },
+  "allTimeResults": {
+    "title": "All time results"
+  }
+}

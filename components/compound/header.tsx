@@ -10,7 +10,7 @@ type Props = {
 
 export const Header = ({ withBackNavigation, withLogo }: Props) => {
   return (
-    <div className="min-h-18 left-0 flex w-full flex-col items-center">
+    <div className="min-h-18 left-0 flex flex-col items-center">
       {withBackNavigation && (
         <div className="absolute left-6">
           <BackNavigation />

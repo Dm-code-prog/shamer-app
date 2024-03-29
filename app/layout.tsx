@@ -1,7 +1,6 @@
 import '#/styles/globals.css';
-import { Metadata } from 'next';
 import React from 'react';
-import { ToastContainer } from '#/app/ui/toast';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: {
@@ -26,21 +25,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en" className="[color-scheme:dark]">
-      <head>
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script src="https://telegram.org/js/telegram-web-app.js"></script>
-        <title>Shamer app</title>
-      </head>
-      <body className="bg-background flex flex-col items-center">
-        <div className="w-full max-w-[420px]">
-          <div className=" flex min-h-screen flex-col items-center justify-start gap-8 p-8 pb-16">
-            {children}
-          </div>
-        </div>
-        <ToastContainer />
-      </body>
-    </html>
-  );
+  return <>{children}</>;
 }

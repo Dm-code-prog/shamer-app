@@ -10,7 +10,7 @@ import {
 } from '#/components/ui/drawer';
 import { Avatar, AvatarFallback } from '#/components/ui/avatar';
 import { ScrollArea } from '#/components/ui/scroll-area';
-import { ACTIVITY_TYPES } from '#/app/ui/challenges/create/activity_types';
+import { ACTIVITY_TYPES } from '#/app/[locale]/ui/challenges/create/activity_types';
 import Image from 'next/image';
 import { Button } from '#/components/ui/button';
 

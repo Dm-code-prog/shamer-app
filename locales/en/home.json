@@ -1,0 +1,23 @@
+{
+  "banners": {
+    "achievements": {
+      "title": "Achievements",
+      "content": "Coming soon!"
+    },
+    "team": {
+      "title": "Teams",
+      "content": "You don't have a team yet \uD83D\uDE14"
+    },
+    "info": {
+      "title": "Profile",
+      "content": "You have not completed your profile yet \uD83D\uDE14"
+    }
+  },
+  "challenges": {
+    "title": "Challenges",
+    "challenge": {
+      "timer": "Ends in"
+    }
+  },
+  "rp": "rp"
+}

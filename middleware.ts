@@ -1,21 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getSession } from '#/domains/user/server/sessions';
+import { i18nRouter } from 'next-i18n-router';
+import i18nConfig from './i18nConfig';
 
 export async function middleware(request: NextRequest) {
-  const user = await getSession();
-  if (!user) {
-    return NextResponse.redirect(
-      new URL('/auth/telegram', request.nextUrl).toString(),
-    );
-  }
-
   if (request.nextUrl.pathname === '/') {
-    return NextResponse.redirect(new URL('/ui/', request.nextUrl).toString());
+    return NextResponse.redirect(new URL('/ui', request.nextUrl));
   }
 
-  return NextResponse.next();
+  return i18nRouter(request, i18nConfig);
 }
 
 export const config = {
-  matcher: ['/', '/ui(.*)', '/start(.*)'],
+  matcher: ['/ui(.*)', '/api(.*)', '/'],
 };

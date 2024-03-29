@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { createTeam } from '#/domains/team/server/teams';
-import { mustUser } from '#/domains/user/server/sessions';
+import { authorizeUser } from '#/domains/user/server/sessions';
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { id: user_id } = await mustUser();
+    const { id: user_id } = await authorizeUser();
     const { name, description, emoji, is_public } = await req.json();
     const id = await createTeam({
       user_id,

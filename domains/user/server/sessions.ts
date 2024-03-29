@@ -2,6 +2,7 @@ import 'server-only';
 import { sql } from '@vercel/postgres';
 import { User } from '#/domains/user/types';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export const getSession = async (): Promise<User | null> => {
   const shamerSession = cookies().get('shamer_session');
@@ -11,10 +12,10 @@ export const getSession = async (): Promise<User | null> => {
   return getUserBySessionToken(shamerSession.value);
 };
 
-export const mustUser = async () => {
+export const authorizeUser = async () => {
   const session = await getSession();
   if (!session) {
-    throw new Error('No session');
+    redirect('/auth/telegram');
   }
   return session;
 };

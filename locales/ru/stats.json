@@ -1,0 +1,15 @@
+{
+  "streak": {
+    "streak": "спорта подряд",
+    "days": "дней"
+  },
+  "activity": {
+    "title": "Активность"
+  },
+  "allTimeResults": {
+    "title": "За все время"
+  },
+  "units": {
+    "reps": "повторов"
+  }
+}

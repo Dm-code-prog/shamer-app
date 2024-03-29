@@ -1,0 +1,16 @@
+{
+  "myTeams": "My teams",
+  "publicTeams": "Public teams",
+  "members": "members",
+  "cta": {
+    "inviteCode": "I have invite code",
+    "createTeam": "Create team",
+    "createChallenge": "Create challenge"
+  },
+  "challenges": {
+    "title": "Challenges",
+    "challenge": {
+      "timer": "Time left"
+    }
+  }
+}

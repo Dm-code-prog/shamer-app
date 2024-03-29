@@ -1,10 +1,12 @@
 'use client';
 import { Button } from '#/components/ui/button';
 import { useRouter, usePathname } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 export const NavigationMenu = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   const selectedCl = 'border-primary w-full border-2 rounded-xl';
 
@@ -14,25 +16,25 @@ export const NavigationMenu = () => {
         variant="ghost"
         size="lg"
         onClick={() => router.push('/ui/stats')}
-        className={pathname === '/ui/stats' ? selectedCl : 'w-full'}
+        className={pathname.endsWith('/ui/stats') ? selectedCl : 'w-full'}
       >
-        Stats
+        {t('stats')}
       </Button>
       <Button
         variant="ghost"
         size="lg"
         onClick={() => router.push('/ui')}
-        className={pathname === '/ui' ? selectedCl : 'w-full'}
+        className={pathname.endsWith('/ui') ? selectedCl : 'w-full'}
       >
-        Home
+        {t('home')}
       </Button>
       <Button
         variant="ghost"
         size="lg"
         onClick={() => router.push('/ui/team')}
-        className={pathname === '/ui/team' ? selectedCl : 'w-full'}
+        className={pathname.endsWith('/ui/team') ? selectedCl : 'w-full'}
       >
-        Teams
+        {t('teams')}
       </Button>
     </div>
   );

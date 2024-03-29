@@ -1,0 +1,61 @@
+{
+  "myTeams": "Мои команды",
+  "publicTeams": "Публичные команды",
+  "members": "Участников",
+  "cta": {
+    "inviteCode": "Ввести инвайт-код",
+    "createTeam": "Создать команду",
+    "createChallenge": "Создать челлендж"
+  },
+  "challenges": {
+    "title": "Челленджи",
+    "challenge": {
+      "timer": "До конца"
+    }
+  },
+  "form": {
+    "name": {
+      "title": "Название",
+      "placeholder": "Введите название"
+    },
+    "exercises": {
+      "title": "Упражнения",
+      "placeholder": "Выбрать",
+      "type": {
+        "title": "Тип челленджа",
+        "options": {
+          "daily": "Ежедневный",
+          "weekly": "Еженедельный"
+        }
+      },
+      "target": {
+        "title": "Цель",
+        "options": {
+          "30": "30 минут",
+          "1": "1 час",
+          "2": "2 часа"
+        }
+      }
+    },
+    "save": "Сохранить",
+    "extra": {
+      "goals": "Экстра цели",
+      "prize": "Экстра приз"
+    }
+  },
+  "createTeamForm": {
+    "title": "Создать команду",
+    "name": {
+      "title": "Название",
+      "placeholder": "Как насчет Качки HQ \uD83D\uDCAA?"
+    },
+    "bio": {
+      "title": "Описание",
+      "placeholder": "Введите описание"
+    },
+    "public": {
+      "label": "Сделать публичной"
+    },
+    "save": "Сохранить"
+  }
+}

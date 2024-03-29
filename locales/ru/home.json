@@ -1,0 +1,23 @@
+{
+  "banners": {
+    "achievements": {
+      "title": "Достижения",
+      "content": "Скоро!"
+    },
+    "team": {
+      "title": "Команды",
+      "content": "У тебя пока нет команды \uD83D\uDE14"
+    },
+    "info": {
+      "title": "Профиль",
+      "content": "Ты еще не заполнил свой профиль \uD83D\uDE14"
+    }
+  },
+  "challenges": {
+    "title": "Челленджи",
+    "challenge": {
+      "timer": "До конца"
+    }
+  },
+  "rp": ""
+}

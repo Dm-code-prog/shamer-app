@@ -97,7 +97,7 @@ export const getMyTeams = async (user_id: string): Promise<Team[]> => {
              t.owner_id,
              t.emoji,
              (select count(*
-                     ) + 1
+                     )
               from user_teams ut
               where ut.team_id = t.id)
                                        as
