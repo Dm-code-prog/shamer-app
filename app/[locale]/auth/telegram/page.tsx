@@ -1,11 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader } from '#/components/ui/card';
 import { useRouter } from 'next/navigation';
 import { ShamerLogo } from '#/components/compound/shamer-logo';
-import { AppDescription } from '#/app/auth/telegram/app-description';
+import { AppDescription } from './app-description';
 import { Button } from '#/components/ui/button';
-import Link from 'next/link';
 import toast from 'react-hot-toast';
 
 export default function Page() {
