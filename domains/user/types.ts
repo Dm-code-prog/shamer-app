@@ -29,3 +29,9 @@ export const UserInfoSchema = z.object({
 });
 
 export type UserInfo = z.infer<typeof UserInfoSchema>;
+
+export const UseInviteCodeSchema = z.object({
+  invite_code: z.string(),
+});
+
+export type UseInviteCodeRequest = z.infer<typeof UseInviteCodeSchema>;

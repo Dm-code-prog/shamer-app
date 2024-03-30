@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { authorizeUser } from '#/domains/user/server/sessions';
 import initTranslations from '#/app/i18n';
 import TranslationsProvider from '#/components/TranslationsProvider';
+import { JoinByInviteCode } from '#/app/[locale]/ui/team/join-by-invite-code';
 
 export default async function Teams({
   searchParams,
@@ -50,9 +51,7 @@ export default async function Teams({
             </Suspense>
           </TabsContent>
         </Tabs>
-        <Button className="bg-card mt-auto w-32 self-center">
-          {t('cta.inviteCode')}
-        </Button>
+        <JoinByInviteCode />
         <Button
           variant="secondary"
           className=" w-64 self-center"

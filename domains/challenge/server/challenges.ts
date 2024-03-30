@@ -90,12 +90,14 @@ export const getUserChallenges = async (
              us.user_id = ${user_id} as is_completed
       from challenges c
                left join teams t on c.team_id = t.id
+               left join user_teams ut on t.id = ut.team_id
                left join challenge_instances ci
                          on c.id = ci.challenge_id
                              and ci.start_time < now() and ci.end_time > now()
                left join user_stats us on ci.id = us.challenge_instance_id
                left join challenge_activities ca on c.id = ca.challenge_id
                left join activity_types at on ca.activity_type_id = at.id
+      where ut.user_id = ${user_id}
       group by c.id, ci.start_time, ci.end_time, t.id, t.name, us.user_id
       order by is_completed desc, ci.end_time desc
       limit ${limit}

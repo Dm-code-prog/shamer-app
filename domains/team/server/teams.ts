@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres';
 import { CreateTeamRequest, Team } from '#/domains/team/types';
-import { User } from '#/domains/user/types';
+import { UseInviteCodeRequest, User } from '#/domains/user/types';
 
 export const createTeam = async ({
   name,
@@ -75,13 +75,16 @@ export const getTeamMembers = async (team_id: number): Promise<User[]> => {
   const { rows } = await sql`
       select u.id,
              u.telegram_username,
-             u.emoji
+             u.emoji,
+             coalesce(urp.total_rp, 0) as rp_total
       from users u
                left join
            user_teams ut
            on
                u.id = ut.user_id
+               left join user_rp urp on u.id = urp.user_id
       where ut.team_id = ${team_id}
+      order by coalesce(urp.total_rp, 0) desc
   `;
 
   return rows as User[];
@@ -96,19 +99,16 @@ export const getMyTeams = async (user_id: string): Promise<Team[]> => {
              t.is_public,
              t.owner_id,
              t.emoji,
-             (select count(*
-                     )
+             (select count(*)
               from user_teams ut
               where ut.team_id = t.id)
-                                       as
-                                          members_count,
-             coalesce(trp.total_rp, 0) as rp_total,
+                                          as
+                                             members_count,
+             coalesce(trp.total_rp, 0)    as rp_total,
              exists(select 1
                     from user_teams
                     where user_id = ${user_id}
-                      and team_id = t.id) or t.owner_id = ${user_id}
-                                       as
-                                          current_user_is_member_or_owner
+                      and team_id = t.id) as current_user_is_member_or_owner
       from teams t
                left join
            user_teams ut
@@ -116,7 +116,6 @@ export const getMyTeams = async (user_id: string): Promise<Team[]> => {
                t.id = ut.team_id
                left join team_rp trp on t.id = trp.id
       where ut.user_id = ${user_id}
-         or t.owner_id = ${user_id}
       order by coalesce(trp.total_rp, 0) desc
   `;
 
@@ -155,4 +154,38 @@ export const getPublicTeams = async (
   `;
 
   return rows as Team[];
+};
+
+export const createInviteCode = async (team_id: number): Promise<string> => {
+  const { rows } = await sql`
+      insert into very_not_secure_team_invites (team_id, token)
+      values (${team_id}, md5(random()::text || clock_timestamp()::text))
+      returning token
+  `;
+
+  return rows[0].token;
+};
+
+export const applyInviteCode = async (
+  req: UseInviteCodeRequest & { user_id: string },
+): Promise<void> => {
+  const { rows } = await sql`
+      insert into user_teams (user_id, team_id)
+      select ${req.user_id}, team_id
+      from very_not_secure_team_invites
+      where token = ${req.invite_code}
+  `;
+
+  await sql`
+      update very_not_secure_team_invites
+      set is_active = false
+      where token = ${req.invite_code}
+  `;
+
+  const teamID = rows[0].team_id;
+  if (!teamID) {
+    throw new Error('Invalid invite code');
+  }
+
+  return teamID;
 };

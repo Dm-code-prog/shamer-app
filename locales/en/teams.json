@@ -12,5 +12,56 @@
     "challenge": {
       "timer": "Time left"
     }
+  },
+  "form": {
+    "name": {
+      "title": "Name",
+      "placeholder": "You can use emoji! \uD83D\uDE0E"
+    },
+    "exercises": {
+      "title": "Exercises",
+      "placeholder": "Select",
+      "type": {
+        "title": "Challenge type",
+        "options": {
+          "daily": "Daily",
+          "weekly": "Weekly"
+        }
+      },
+      "target": {
+        "title": "Goals",
+        "options": {
+          "30": "30 minutes",
+          "1": "1 hour",
+          "2": "2 hours"
+        }
+      }
+    },
+    "save": "Save",
+    "extra": {
+      "goals": "Extra goals",
+      "prize": "Extra prize"
+    }
+  },
+  "createTeamForm": {
+    "title": "Create team",
+    "name": {
+      "title": "Name",
+      "placeholder": "How about lifters HQ \uD83D\uDCAA?"
+    },
+    "bio": {
+      "title": "BIO",
+      "placeholder": "Tell us about your team"
+    },
+    "public": {
+      "label": "Make team public"
+    },
+    "save": "Save"
+  },
+  "joinByInvite": {
+    "title": "Join by invite code",
+    "code": "Paste your invite code",
+    "save": "Join",
+    "error": "Invalid code"
   }
 }

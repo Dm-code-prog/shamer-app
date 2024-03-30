@@ -8,8 +8,6 @@ export const PUT = async (req: NextRequest) => {
     const body = (await req.json()) as JoinTeamRequest;
     const user = await authorizeUser();
 
-    console.log('user', user);
-
     await joinTeam(body.team_id, user.id);
 
     return NextResponse.json({ success: true });
