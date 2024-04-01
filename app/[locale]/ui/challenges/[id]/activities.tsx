@@ -74,7 +74,7 @@ export const Activities = ({ properties, challenge_instance_id }: Props) => {
       ))}
 
       {rpForActivities > 0 && (
-        <h2 className="m-2 text-3xl text-green-400">+{rpForActivities} RP</h2>
+        <h2 className="m-2 text-3xl text-green-400">+{rpForActivities} 💎</h2>
       )}
 
       {hasActivitiesToComplete ? (

@@ -245,7 +245,7 @@ export const getUserDailyStreak = async (user_id: string): Promise<number> => {
       with distincs_dates as (select distinct Date(created_at) as day_of_activity
                               from user_stats
                               where user_id = ${user_id}),
-           all_dates as (select generate_series(min(created_at), now(), interval '1 day')::date as date
+           all_dates as (select generate_series(min(created_at), current_date + interval '1 day', interval '1 day')::date as date
                          from user_stats)
       select date, day_of_activity
       from all_dates
@@ -254,9 +254,6 @@ export const getUserDailyStreak = async (user_id: string): Promise<number> => {
   `;
 
   const rows = res.rows as StatDates[];
-
-  // go over the stat dates and find the longest streak.
-  // streak ends when day_of_activity is nullish
 
   let streak = 0;
   let should_break = false;
@@ -294,6 +291,7 @@ export const getUserDaysOfActivity = async (
       select distinct to_char(Date(created_at), 'YYYY-MM-DD') as day_of_activity
       from user_stats
       where user_id = ${user_id}
+      and extract(month from created_at) = extract(month from now())
   `;
 
   return res.rows.map((r) => r.day_of_activity) as string[];

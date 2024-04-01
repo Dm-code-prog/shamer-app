@@ -31,9 +31,7 @@ export default async function Page({
             <Link href="/ui/profile" className="text-2xl">
               ⚙️
             </Link>
-            <span className="text-2xl">
-              {user.rp_total || 0} {t('rp')} 💎
-            </span>
+            <span className="text-2xl">{user.rp_total || 0} 💎</span>
           </div>
           <div className="flex w-full flex-col items-center justify-center gap-2">
             <Avatar className="h-16 w-16">

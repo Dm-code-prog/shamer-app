@@ -65,7 +65,7 @@ export const ActivityCalendar: React.FC<ActivityCalendarProps> = ({
             return classes;
           })()}
         >
-          {day.getDate()}
+          {day.getUTCDate()}
         </div>
       ))}
     </div>

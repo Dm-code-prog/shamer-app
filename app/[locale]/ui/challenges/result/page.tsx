@@ -20,8 +20,8 @@ export default function Page() {
         </p>
         <h2 className="relative m-2 text-7xl text-green-400">
           {rp}
-          <span className="text-primary-foreground absolute bottom-2 right-[-20px] text-xl">
-            RP
+          <span className="text-primary-foreground absolute bottom-2 right-[-32px] text-xl">
+            💎
           </span>
         </h2>
 

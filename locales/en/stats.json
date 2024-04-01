@@ -8,5 +8,11 @@
   },
   "allTimeResults": {
     "title": "All time results"
+  },
+  "units": {
+    "reps": "reps",
+    "km": "km",
+    "pools": "pools",
+    "min": "min"
   }
 }
