@@ -95,7 +95,11 @@ export default function CreateChallengeForm({ team_id }: { team_id: string }) {
       <Input
         placeholder={t('form.name.placeholder')}
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => {
+          if (e.target.value.length > 0 && e.target.value.length < 30) {
+            setName(e.target.value);
+          }
+        }}
       />
 
       <h3 className="text-3xl">{t('form.exercises.title')}</h3>

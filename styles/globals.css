@@ -26,6 +26,12 @@
     --radius: 0.5rem;
 
     --destructive: #ff5252;
+
+    --bronze: #cd7f32;
+    --silver: #c0c0c0;
+    --gold: #ffd700;
+    --diamond: #b9f2ff;
+    --immortal: #ff00ff;
   }
 }
 

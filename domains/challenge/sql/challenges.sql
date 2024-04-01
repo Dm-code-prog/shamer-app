@@ -24,3 +24,5 @@ alter type challenge_type add value 'group-daily';
 
 
 alter table challenges alter column  team_id set not null;
+
+alter table challenges alter column name type varchar(30);

@@ -45,7 +45,7 @@ export default async function Page({
       </Avatar>
 
       <div className="w-32 text-center">
-        <span className="text-primary text-3xl font-bold">
+        <span className="text-primary break-words text-3xl font-bold">
           {challenge.name}
         </span>
         <p className="text-muted-foreground">by @{challenge.owner}</p>

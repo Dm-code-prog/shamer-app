@@ -19,11 +19,11 @@ const config = {
     },
     extend: {
       colors: {
-        bronze: '#cd7f32',
-        silver: '#b7b3b3',
-        gold: '#ffd700',
-        diamond: '#b9f2ff',
-        immortal: '#800080',
+        bronze: 'var(--bronze)',
+        silver: 'var(--silver)',
+        gold: 'var(--gold)',
+        diamond: 'var(--diamond)',
+        immortal: 'var(--immortal)',
         border: 'var(--border)',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

@@ -175,6 +175,7 @@ export const applyInviteCode = async (
       select ${req.user_id}, team_id
       from very_not_secure_team_invites
       where token = ${req.invite_code}
+      returning team_id
   `;
 
   await sql`

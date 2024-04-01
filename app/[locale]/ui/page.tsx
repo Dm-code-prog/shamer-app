@@ -32,9 +32,6 @@ export default async function Page({
             <Link href="/ui/profile" className="text-2xl">
               ⚙️
             </Link>
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-2xl">
-              <League league={'gold'} />
-            </span>
             <span className="text-2xl">{user.rp_total || 0} 🏆</span>
           </div>
           <div className="flex w-full flex-col items-center justify-center gap-2">
@@ -43,7 +40,8 @@ export default async function Page({
                 {user.emoji}
               </AvatarFallback>
             </Avatar>
-            <h1 className="text-2xl font-black">@{user.telegram_username}</h1>
+            <h1 className="text-2xl">@{user.telegram_username}</h1>
+            <League league={user.league} />
           </div>
         </div>
         {!user.has_team && (

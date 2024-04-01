@@ -14,7 +14,7 @@ export const ChallengesPreview = async ({ user_id, locale }: Props) => {
   return (
     <div className="flex w-full flex-col gap-4">
       {challenges.length > 0 && (
-        <h2 className="text-3xl font-black">{t('challenges.title')}</h2>
+        <h2 className="ml-[40px] text-2xl">{t('challenges.title')}</h2>
       )}
       {challenges.map((challenge) => (
         <Challenge challenge={challenge} key={challenge.id} />
