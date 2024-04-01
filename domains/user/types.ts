@@ -13,6 +13,7 @@ export type User = {
   user_info_is_filled: boolean;
   has_team: boolean;
   rp_total: number;
+  league: string;
 };
 
 export type TelegramUser = {

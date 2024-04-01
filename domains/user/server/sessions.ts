@@ -48,7 +48,10 @@ export const getUserBySessionToken = async (
                                                     where t.owner_id = u.id) as has_team,
              (select total_rp
               from user_rp
-              where user_id = u.id)                                          as rp_total
+              where user_id = u.id)                                          as rp_total,
+             (select league
+              from user_rp
+              where user_id = u.id)                                          as league
       from sessions s
                left join user_info uf
                          on s.user_id = uf.user_id

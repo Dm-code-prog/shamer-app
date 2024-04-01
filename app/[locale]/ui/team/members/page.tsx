@@ -3,6 +3,7 @@ import { Card } from '#/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '#/components/ui/avatar';
 import { Header } from '#/components/compound/header';
 import { CopyInviteCode } from '#/app/[locale]/ui/team/members/copyInviteCode';
+import { League } from '#/components/compound/league';
 
 export default async function Page({
   searchParams,
@@ -20,15 +21,20 @@ export default async function Page({
       <div className="flex w-full flex-col items-center justify-center gap-4">
         {members.map((member) => (
           <Card key={member.id} className="flex w-full items-center gap-4">
-            <Avatar>
-              <AvatarImage src={member.emoji} alt={member.telegram_username} />
-              <AvatarFallback>{member.emoji}</AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col gap-2">
+            <div className="flex items-center">
+              <Avatar>
+                <AvatarImage
+                  src={member.emoji}
+                  alt={member.telegram_username}
+                />
+                <AvatarFallback>{member.emoji}</AvatarFallback>
+              </Avatar>
               <h3>@{member.telegram_username}</h3>
             </div>
-
-            <p className="ml-auto">{member.rp_total} 💎</p>
+            <div className="ml-auto">
+              <League league={member.league} />
+            </div>
+            <p className="">{member.rp_total} 🏆</p>
           </Card>
         ))}
       </div>

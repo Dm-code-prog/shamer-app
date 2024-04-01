@@ -50,7 +50,7 @@ export default async function Page({
           </p>
         </div>
         <div className="ml-auto flex flex-col items-center gap-2">
-          <h2 className="text-4xl leading-8">💎</h2>
+          <h2 className="text-4xl leading-8">🏆</h2>
           <p className="text-gray-600">+{teamInfo.rp_total || 0} RP</p>
         </div>
       </div>

@@ -76,7 +76,8 @@ export const getTeamMembers = async (team_id: number): Promise<User[]> => {
       select u.id,
              u.telegram_username,
              u.emoji,
-             coalesce(urp.total_rp, 0) as rp_total
+             coalesce(urp.total_rp, 0) as rp_total,
+             urp.league
       from users u
                left join
            user_teams ut

@@ -7,6 +7,7 @@ import { ChallengesPreview } from '#/app/[locale]/ui/challenges-preview';
 import { unstable_noStore as noStore } from 'next/cache';
 import initTranslations from '#/app/i18n';
 import TranslationsProvider from '#/components/TranslationsProvider';
+import { League } from '#/components/compound/league';
 
 const emoji = '\u{1F603}';
 
@@ -27,11 +28,14 @@ export default async function Page({
     >
       <>
         <div className="flex w-full flex-col justify-center gap-2">
-          <div className="flex justify-between">
+          <div className="relative flex justify-between">
             <Link href="/ui/profile" className="text-2xl">
               ⚙️
             </Link>
-            <span className="text-2xl">{user.rp_total || 0} 💎</span>
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-2xl">
+              <League league={'gold'} />
+            </span>
+            <span className="text-2xl">{user.rp_total || 0} 🏆</span>
           </div>
           <div className="flex w-full flex-col items-center justify-center gap-2">
             <Avatar className="h-16 w-16">

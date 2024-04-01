@@ -49,7 +49,7 @@ export const ACTIVITY_TYPES = {
     icon: benchPressWhite,
     name: 'bench-press',
   },
-  lungesWhite: {
+  lunges: {
     unit: 'reps',
     icon: lungesWhite,
     name: 'lunges',

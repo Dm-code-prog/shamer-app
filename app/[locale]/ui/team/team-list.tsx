@@ -22,7 +22,7 @@ export const TeamList = ({ teams, t }: Props) => {
               {team.members_count} {t('members')}
             </p>
           </div>
-          <p>{team.rp_total || 0} 💎</p>
+          <p>{team.rp_total || 0} 🏆</p>
         </Link>
       ))}
     </div>
