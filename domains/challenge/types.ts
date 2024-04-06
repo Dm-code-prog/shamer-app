@@ -10,6 +10,7 @@ export type Activity = {
   weight_coefficient: number;
   is_extra: boolean;
   is_completed: boolean;
+  custom_rp?: number;
 };
 
 export type Challenge = {

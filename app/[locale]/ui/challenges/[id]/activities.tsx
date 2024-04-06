@@ -63,15 +63,16 @@ export const Activities = ({
     if (completedActivities.includes(activity.id)) {
       return (
         acc +
-        rp({
-          weight: user.age,
-          height: user.height,
-          age: user.age,
-          met: activity.met,
-          time: activity.time,
-          activityLevel: 1.55,
-          intenseLevel: 1,
-        })
+        (activity.custom_rp ??
+          rp({
+            weight: user.age,
+            height: user.height,
+            age: user.age,
+            met: activity.met,
+            time: activity.time,
+            activityLevel: 1.55,
+            intenseLevel: 1,
+          }))
       );
     }
     return acc;

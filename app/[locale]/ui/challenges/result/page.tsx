@@ -16,7 +16,7 @@ export default function Page() {
           <AvatarFallback className="text-[64px]">🏆</AvatarFallback>
         </Avatar>
         <p className="mt-8 max-w-[260px] text-center text-xl">
-          Well done you completed the challenge
+          Well done, you have earned
         </p>
         <h2 className="relative m-2 text-7xl text-green-400">
           {rp}

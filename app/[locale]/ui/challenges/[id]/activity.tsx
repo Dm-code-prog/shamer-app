@@ -19,14 +19,14 @@ export const ActivityComp = ({
   }
 
   const time = (() => {
-    if (activity.time < 1) {
+    if (activity.time > 0 && activity.time < 1) {
       return `in ${activity.time * 60} min`;
     }
-    if (activity.time < 24) {
+    if (activity.time > 0 && activity.time < 24) {
       return `in ${activity.time}` + 'h';
     }
 
-    if (activity.time === 24) {
+    if (activity.time === 24 || !activity.time) {
       return '';
     }
 

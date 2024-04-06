@@ -38,8 +38,9 @@ export const getTeamChallenges = async (
              json_agg(
                      json_build_object('type', at.name, 'unit', at.unit, 'n_units', ca.n_units, 'time', ca.time,
                                        'is_extra', ca.is_extra, 'is_completed',
-                                       exists((select 1 from user_stats us where us.challenge_instance_id = ci.id)))) as activities,
-             us.user_id = ${user_id}                                                                                  as is_completed
+                                       exists((select 1 from user_stats us where us.challenge_instance_id = ci.id))))
+                                     as activities,
+             us.user_id = ${user_id} as is_completed
       from challenges c
                left join challenge_instances ci
                          on c.id = ci.challenge_id
@@ -88,6 +89,7 @@ export const getUserChallenges = async (
                                        exists((select 1 from user_stats us where us.challenge_instance_id = ci.id)))
              )                       as activities,
              us.user_id = ${user_id} as is_completed
+
       from challenges c
                left join teams t on c.team_id = t.id
                left join user_teams ut on t.id = ut.team_id
@@ -132,11 +134,17 @@ export const getChallenge = async (challenge_id: number, user_id: string) => {
              ci.id                   as instance_id,
              json_agg(
                      json_build_object(
-                             'id', ca.id, 'met', at.met,
-                             'type', at.name, 'units', at.unit, 'n_units', ca.n_units, 'time', ca.time,
-                             'is_extra', ca.is_extra, 'is_completed', exists((select 1
-                                                                              from user_stats us
-                                                                              where us.challenge_instance_id = ci.id))
+                             'id', ca.id,
+                             'met', at.met,
+                             'type', at.name,
+                             'units', at.unit,
+                             'n_units', ca.n_units,
+                             'time', ca.time,
+                             'is_extra', ca.is_extra,
+                             'is_completed', exists((select 1
+                                                     from user_stats us
+                                                     where us.challenge_instance_id = ci.id)),
+                             'custom_rp', ca.custom_rp
                      ))              as activities,
              us.user_id = ${user_id} as is_completed,
              u.telegram_username     as owner

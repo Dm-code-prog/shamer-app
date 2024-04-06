@@ -1,7 +1,9 @@
 create materialized view team_rp as
 select t.id,
-       round(sum(((((10 * ui.weight) + (6.25 * ui.height) - (5 * ui.age) + 5) * 1.55 / 24) * at.met * ca.time) /
-           10)) as total_rp
+       coalesce(sum(ca.custom_rp),
+                round(sum(((((10 * ui.weight) + (6.25 * ui.height) - (5 * ui.age) + 5) * 1.55 / 24) * at.met *
+                           ca.time)) /
+                      10)) as total_rp
 from teams t
          join challenges c on t.id = c.team_id
          join challenge_instances ci on c.id = ci.challenge_id
