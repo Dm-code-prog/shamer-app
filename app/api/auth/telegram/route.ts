@@ -22,6 +22,8 @@ export const POST = async (req: NextRequest) => {
   const { initData } = body;
   const ok = verifyTelegramHmac(initData);
 
+  console.log('debug initData:', initData, ok);
+
   if (!ok) {
     return NextResponse.json(
       {
