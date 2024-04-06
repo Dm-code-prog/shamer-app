@@ -44,6 +44,8 @@ export default async function Page({
             <League league={user.league} />
           </div>
         </div>
+        {/*@ts-ignore */}
+        <ChallengesPreview user_id={user.id} locale={locale} />
         {!user.has_team && (
           <Card>
             <CardHeader>
@@ -84,8 +86,6 @@ export default async function Page({
             </p>
           </CardContent>
         </Card>
-        {/*@ts-ignore */}
-        <ChallengesPreview user_id={user.id} locale={locale} />
       </>
     </TranslationsProvider>
   );

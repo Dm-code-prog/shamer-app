@@ -158,7 +158,15 @@ export const getChallenge = async (challenge_id: number, user_id: string) => {
 
 export const createChallenge = async (
   info: Omit<Challenge, 'id' | 'is_completed' | 'team_name' | 'owner'>,
+  user_id: string,
 ): Promise<number> => {
+  if (
+    info.team_id === 33 &&
+    user_id !== 'b90ee37f-4cb3-4a3a-ac98-4a91ad2166ce'
+  ) {
+    throw new Error('Not allowed to create challenges in the default team');
+  }
+
   const challenge = await sql`
       insert into challenges (team_id, name, type)
       values (${info.team_id}, ${info.name}, ${info.type})
@@ -245,7 +253,8 @@ export const getUserDailyStreak = async (user_id: string): Promise<number> => {
       with distincs_dates as (select distinct Date(created_at) as day_of_activity
                               from user_stats
                               where user_id = ${user_id}),
-           all_dates as (select generate_series(min(created_at), current_date + interval '1 day', interval '1 day')::date as date
+           all_dates as (select generate_series(min(created_at), current_date + interval '1 day',
+                                                interval '1 day')::date as date
                          from user_stats)
       select date, day_of_activity
       from all_dates
@@ -291,7 +300,7 @@ export const getUserDaysOfActivity = async (
       select distinct to_char(Date(created_at), 'YYYY-MM-DD') as day_of_activity
       from user_stats
       where user_id = ${user_id}
-      and extract(month from created_at) = extract(month from now())
+        and extract(month from created_at) = extract(month from now())
   `;
 
   return res.rows.map((r) => r.day_of_activity) as string[];

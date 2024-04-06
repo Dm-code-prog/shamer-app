@@ -18,12 +18,27 @@ export const ActivityComp = ({
     classes += ' border-green-500 border-4 animate-pulse';
   }
 
+  const time = (() => {
+    if (activity.time < 1) {
+      return `in ${activity.time * 60} min`;
+    }
+    if (activity.time < 24) {
+      return `in ${activity.time}` + 'h';
+    }
+
+    if (activity.time === 24) {
+      return '';
+    }
+
+    return `in ${activity.time / 24} days`;
+  })();
+
   return (
     <div className={classes}>
       <div>
         <p>
-          {activity.n_units} {activity.units} of {activity.type} in{' '}
-          {activity.time * 60} min.
+          {activity.n_units} {activity.units} of {activity.type}
+          {time}
         </p>
         {activity.is_extra && (
           <Badge className="bg-primary text-white">Extra</Badge>

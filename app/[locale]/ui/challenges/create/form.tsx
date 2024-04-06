@@ -96,7 +96,7 @@ export default function CreateChallengeForm({ team_id }: { team_id: string }) {
         placeholder={t('form.name.placeholder')}
         value={name}
         onChange={(e) => {
-          if (e.target.value.length > 0 && e.target.value.length < 30) {
+          if (e.target.value.length >= 0 && e.target.value.length < 30) {
             setName(e.target.value);
           }
         }}

@@ -4,6 +4,9 @@ import { verifyTelegramHmac } from '#/app/api/auth/telegram/hmac';
 import { saveTelegramUser } from '#/domains/user/server/users';
 import { createSession } from '#/domains/user/server/sessions';
 import { cookies } from 'next/headers';
+import { joinTeam } from '#/domains/team/server/teams';
+
+const SHAMER_TEAM_ID = 33;
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
@@ -54,7 +57,7 @@ export const POST = async (req: NextRequest) => {
       {
         error: 'Internal server error',
       },
-      { status: 500 },
+      { status: 400 },
     );
   }
 
@@ -75,6 +78,15 @@ export const POST = async (req: NextRequest) => {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 90),
     });
 
+    try {
+      await joinTeam(SHAMER_TEAM_ID, id);
+    } catch (e) {
+      console.error(
+        `Failed to join user ${id} to the public team. Perhaps because the user is already a member`,
+        e,
+      );
+    }
+
     return NextResponse.json(
       {
         ok: true,
@@ -83,7 +95,7 @@ export const POST = async (req: NextRequest) => {
       { status: 200 },
     );
   } catch (e) {
-    console.error(e);
+    console.error('/api/auth/telegram', e);
     return NextResponse.json(
       {
         error: 'Internal server error',

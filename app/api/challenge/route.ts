@@ -4,8 +4,11 @@ import {
   Challenge,
   CreateChallengeRequestSchema,
 } from '#/domains/challenge/types';
+import { authorizeUser } from '#/domains/user/server/sessions';
 
 export const POST = async (request: NextRequest) => {
+  const user = await authorizeUser();
+
   try {
     let body;
     try {
@@ -15,7 +18,7 @@ export const POST = async (request: NextRequest) => {
       return NextResponse.json({ error: e }, { status: 400 });
     }
 
-    const id = await createChallenge(body);
+    const id = await createChallenge(body, user.id);
     return NextResponse.json({ id }, { status: 201 });
   } catch (e) {
     console.error(e);

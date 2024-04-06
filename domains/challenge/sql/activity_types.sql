@@ -17,3 +17,6 @@ alter table activity_types
 alter type unit_type add value 'pools';
 
 alter type unit_type add value 'min';
+
+alter type unit_type add value 'liters';
+

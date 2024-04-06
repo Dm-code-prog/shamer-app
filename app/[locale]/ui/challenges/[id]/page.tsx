@@ -64,6 +64,7 @@ export default async function Page({
         </div>
       ) : (
         <Activities
+          user={user}
           properties={challenge.activities}
           challenge_instance_id={challenge.instance_id!}
         />

@@ -22,6 +22,10 @@ const classes = {
 
 export const League = ({ league }: { league: string }) => {
   const leagueData = leagues.find((l) => l.name === league);
+
+  if (!leagueData) {
+    return null;
+  }
   // @ts-ignore
   const className = classes[leagueData.color];
   return (

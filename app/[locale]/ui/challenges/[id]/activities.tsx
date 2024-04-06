@@ -9,13 +9,21 @@ import {
 } from '#/domains/challenge/types';
 import { ActivityComp } from './activity';
 import { rp } from '#/domains/challenge/rp';
+import { User } from '#/domains/user/types';
+import { useTranslation } from 'react-i18next';
+import Link from 'next/link';
 
 type Props = {
   properties: Activity[];
+  user: User;
   challenge_instance_id: number;
 };
 
-export const Activities = ({ properties, challenge_instance_id }: Props) => {
+export const Activities = ({
+  properties,
+  challenge_instance_id,
+  user,
+}: Props) => {
   const router = useRouter();
 
   const [completedActivities, setCompletedActivities] = React.useState<
@@ -34,8 +42,13 @@ export const Activities = ({ properties, challenge_instance_id }: Props) => {
     });
 
     if (!res.ok) {
-      toast.error('Failed to submit activities');
-      return;
+      if (res.status === 400) {
+        const response = await res.json();
+        toast.error(response.error);
+        return;
+      }
+
+      toast.error('An error occurred');
     }
 
     toast.success('Activities submitted');
@@ -49,7 +62,16 @@ export const Activities = ({ properties, challenge_instance_id }: Props) => {
   const rpForActivities = properties.reduce((acc, activity) => {
     if (completedActivities.includes(activity.id)) {
       return (
-        acc + rp(activity.met, activity.time, activity.weight_coefficient, 1)
+        acc +
+        rp({
+          weight: user.age,
+          height: user.height,
+          age: user.age,
+          met: activity.met,
+          time: activity.time,
+          activityLevel: 1.55,
+          intenseLevel: 1,
+        })
       );
     }
     return acc;
@@ -73,18 +95,26 @@ export const Activities = ({ properties, challenge_instance_id }: Props) => {
         />
       ))}
 
-      {rpForActivities > 0 && (
+      {rpForActivities > 0 && user.user_info_is_filled && (
         <h2 className="m-2 text-3xl text-green-400">+{rpForActivities} 🏆</h2>
+      )}
+
+      {rpForActivities > 0 && !user.user_info_is_filled && (
+        <>
+          <h2 className="text-md m-2 text-center text-red-500">
+            Please fill your profile to get RP
+          </h2>
+        </>
       )}
 
       {hasActivitiesToComplete ? (
         <Button
-          className="mt-auto w-full"
+          className="mt-auto w-64"
           size="lg"
           onClick={submit}
           disabled={completedActivities.length === 0}
         >
-          Submit
+          Save
         </Button>
       ) : (
         <Button className="mt-auto w-full" size="lg" disabled>

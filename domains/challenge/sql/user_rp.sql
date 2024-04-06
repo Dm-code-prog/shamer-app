@@ -17,7 +17,7 @@ SELECT
         WHEN rc.total_rp BETWEEN 100 AND 699 THEN 'silver'
         WHEN rc.total_rp BETWEEN 700 AND 1599 THEN 'gold'
         WHEN rc.total_rp BETWEEN 1600 AND 2499 THEN 'diamond'
-        ELSE 'immortal'
+        WHEN rc.total_rp > 2500 THEN 'immortal'
         END AS league
 FROM rp_calc rc;
 

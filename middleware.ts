@@ -8,14 +8,22 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/ui', request.nextUrl));
   }
 
-  if (request.nextUrl.pathname.includes('/api')) {
-    await authorizeUser();
+  if (request.nextUrl.pathname === '/api/auth/telegram') {
     return NextResponse.next();
+  }
+
+  if (request.nextUrl.pathname.startsWith('/api')) {
+    try {
+      await authorizeUser();
+      return NextResponse.next();
+    } catch (e) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
   }
 
   return i18nRouter(request, i18nConfig);
 }
 
 export const config = {
-  matcher: ['/ui(.*)', '/', '/api(.*)'],
+  matcher: ['/ui(.*)', '/', '/api(.*)', '/auth(.*)'],
 };

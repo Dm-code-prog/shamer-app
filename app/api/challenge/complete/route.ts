@@ -8,6 +8,17 @@ export const POST = async (request: NextRequest) => {
   const body = await request.json();
   try {
     const user = await authorizeUser();
+
+    if (!user.user_info_is_filled) {
+      return NextResponse.json(
+        {
+          error:
+            'Your profile is not filled in. Please fill in your profile before completing activities.',
+        },
+        { status: 400 },
+      );
+    }
+
     const req = body as CompleteChallengeActivityRequest;
     await completeActivities({
       user_id: user.id,
