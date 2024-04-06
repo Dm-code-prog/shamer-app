@@ -1,0 +1,24 @@
+{
+  "by": "by",
+  "units": {
+    "reps": "reps",
+    "km": "km",
+    "pools": "pools",
+    "min": "min",
+    "liters": "liters"
+  },
+  "activities": {
+    "walking": "of walking",
+    "push-ups": "of push-ups",
+    "water": "of water"
+  },
+  "save": "Save",
+  "preview": {
+    "title": "The challenge is created!",
+    "description": "Enjoy the challenge and share it with your friends!",
+    "start": "Start"
+  },
+  "errors": {
+    "profile": "Before earning your first \uD83C\uDFC6, you need to complete your profile."
+  }
+}

@@ -38,9 +38,10 @@ export const getTeamChallenges = async (
              json_agg(
                      json_build_object('type', at.name, 'unit', at.unit, 'n_units', ca.n_units, 'time', ca.time,
                                        'is_extra', ca.is_extra, 'is_completed',
-                                       exists((select 1 from user_stats us where us.challenge_instance_id = ci.id))))
-                                     as activities,
-             us.user_id = ${user_id} as is_completed
+                                       exists((select 1
+                                               from user_stats us
+                                               where us.challenge_activity_id = ca.id))))
+                 as activities
       from challenges c
                left join challenge_instances ci
                          on c.id = ci.challenge_id
@@ -50,21 +51,20 @@ export const getTeamChallenges = async (
                left join activity_types at on ca.activity_type_id = at.id
       where c.team_id = ${team_id}
       group by c.id, ci.start_time, ci.end_time, us.user_id
-      order by is_completed desc, ci.end_time desc
-  
+      order by ci.end_time desc
   `;
 
   const res = challenges.rows as Challenge[];
 
-  res.forEach((r) => {
+  res.forEach((c) => {
     let completed = true;
-    r.activities.forEach((a) => {
+    c.activities.forEach((a) => {
       if (!a.is_completed) {
         completed = false;
       }
     });
 
-    r.is_completed = completed;
+    c.is_completed = completed;
   });
 
   return res;
@@ -86,7 +86,9 @@ export const getUserChallenges = async (
              json_agg(
                      json_build_object('type', at.name, 'unit', at.unit, 'n_units', ca.n_units, 'time', ca.time,
                                        'is_extra', ca.is_extra, 'is_completed',
-                                       exists((select 1 from user_stats us where us.challenge_instance_id = ci.id)))
+                                       exists((select 1
+                                               from user_stats us
+                                               where us.challenge_activity_id = ca.id)))
              )                       as activities,
              us.user_id = ${user_id} as is_completed
 
@@ -143,7 +145,7 @@ export const getChallenge = async (challenge_id: number, user_id: string) => {
                              'is_extra', ca.is_extra,
                              'is_completed', exists((select 1
                                                      from user_stats us
-                                                     where us.challenge_instance_id = ci.id)),
+                                                     where us.challenge_activity_id = ca.id)),
                              'custom_rp', ca.custom_rp
                      ))              as activities,
              us.user_id = ${user_id} as is_completed,

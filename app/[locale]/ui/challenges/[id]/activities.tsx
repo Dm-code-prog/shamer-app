@@ -25,6 +25,7 @@ export const Activities = ({
   user,
 }: Props) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const [completedActivities, setCompletedActivities] = React.useState<
     number[]
@@ -101,11 +102,11 @@ export const Activities = ({
       )}
 
       {rpForActivities > 0 && !user.user_info_is_filled && (
-        <>
+        <Link href="/ui/profile">
           <h2 className="text-md m-2 text-center text-red-500">
-            Please fill your profile to get RP
+            {t('errors.profile')}
           </h2>
-        </>
+        </Link>
       )}
 
       {hasActivitiesToComplete ? (
@@ -115,7 +116,7 @@ export const Activities = ({
           onClick={submit}
           disabled={completedActivities.length === 0}
         >
-          Save
+          {t('save')}
         </Button>
       ) : (
         <Button className="mt-auto w-full" size="lg" disabled>

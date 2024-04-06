@@ -59,9 +59,10 @@ export const Challenge = ({ challenge }: ChallengeProps) => {
           Completed
         </Badge>
       ) : (
-        <p>
-          {t('challenges.challenge.timer')} {endsAt}{' '}
-        </p>
+        <div className="flex flex-col items-center">
+          <p className="text-sm">{t('challenges.challenge.timer')}</p>
+          <p className="text-primary">{endsAt}</p>
+        </div>
       )}
     </Link>
   );

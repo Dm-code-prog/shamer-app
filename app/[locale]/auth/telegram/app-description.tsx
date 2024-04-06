@@ -1,17 +1,25 @@
+import { useTranslation } from 'react-i18next';
+
 export const AppDescription = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col gap-8 text-2xl">
       <p className="text-center">
-        <span className="text-primary"> Team</span> UP
+        <span className="text-primary"> {t('team.normal')}</span>{' '}
+        {t('team.bold')}
       </p>
       <p className="text-center">
-        Complete <span className="text-primary"> challenges</span>
+        {t('challenges.normal')}{' '}
+        <span className="text-primary">{t('challenges.bold')}</span>
       </p>
       <p className="text-center">
-        Collect <span className="text-primary"> rewards</span>
+        {t('rewards.normal')}{' '}
+        <span className="text-primary">{t('rewards.bold')}</span>
       </p>
       <p className="text-center">
-        Share your own <span className="text-primary"> story</span>
+        {t('story.normal')}{' '}
+        <span className="text-primary">{t('story.bold')}</span>
       </p>
     </div>
   );

@@ -2,6 +2,8 @@ import type { Activity as ActivityT } from '#/domains/challenge/types';
 import { Badge } from '#/components/ui/badge';
 import { Checkbox } from '#/components/ui/checkbox';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
+import { useTranslation } from 'react-i18next';
 
 type ActivityProps = {
   activity: ActivityT;
@@ -12,10 +14,12 @@ export const ActivityComp = ({
   activity,
   setActivityCompleted,
 }: ActivityProps) => {
+  const { t } = useTranslation();
+
   let classes = 'bg-card flex w-full justify-between rounded-xl p-4';
 
   if (activity.is_completed) {
-    classes += ' border-green-500 border-4 animate-pulse';
+    classes += ' border-green-500 border-4';
   }
 
   const time = (() => {
@@ -37,19 +41,23 @@ export const ActivityComp = ({
     <div className={classes}>
       <div>
         <p>
-          {activity.n_units} {activity.units} of {activity.type}
+          {activity.n_units} {t(`units.${activity.units}`)}{' '}
+          {t(`activities.${activity.type}`)}
           {time}
         </p>
         {activity.is_extra && (
           <Badge className="bg-primary text-white">Extra</Badge>
         )}
       </div>
-      <Checkbox
-        disabled={activity.is_completed}
-        onCheckedChange={(checked) => {
-          setActivityCompleted(activity.id, !!checked);
-        }}
-      />
+      {activity.is_completed ? (
+        <Checkbox checked />
+      ) : (
+        <Checkbox
+          onCheckedChange={(checked) => {
+            setActivityCompleted(activity.id, !!checked);
+          }}
+        />
+      )}
     </div>
   );
 };

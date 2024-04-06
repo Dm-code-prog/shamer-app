@@ -1,0 +1,19 @@
+{
+  "team": {
+    "normal": "Team",
+    "bold": "up"
+  },
+  "challenges": {
+    "normal": "Complete",
+    "bold": "challenges"
+  },
+  "rewards": {
+    "normal": "Earn",
+    "bold": "rewards"
+  },
+  "story": {
+    "normal": "and share",
+    "bold": "your story"
+  },
+  "next": "Continue"
+}
