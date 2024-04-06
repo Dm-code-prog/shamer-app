@@ -30,7 +30,7 @@ export const Challenge = ({ challenge }: ChallengeProps) => {
       href={`/ui/challenges/${challenge.id}`}
     >
       <div className="flex items-center justify-between gap-2">
-        <h3 key={challenge.id} className="max-w-[130px] break-words  text-xl">
+        <h3 key={challenge.id} className="max-w-[130px] break-words">
           {challenge.name}
         </h3>
         {challenge.activities.map((a) => {
