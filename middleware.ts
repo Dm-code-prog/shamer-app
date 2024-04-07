@@ -8,7 +8,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/ui', request.nextUrl));
   }
 
-  if (request.nextUrl.pathname === '/api/auth/telegram') {
+  if (
+    request.nextUrl.pathname === '/api/auth/telegram' ||
+    request.nextUrl.pathname === '/api/webhooks/telegram'
+  ) {
     return NextResponse.next();
   }
 

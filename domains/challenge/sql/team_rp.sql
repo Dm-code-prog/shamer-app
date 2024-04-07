@@ -14,6 +14,8 @@ from teams t
 group by t.id;
 
 
+refresh materialized view team_rp;
+
 drop materialized view team_rp;
 
 
