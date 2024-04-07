@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
 
   if (
     request.nextUrl.pathname === '/api/auth/telegram' ||
-    request.nextUrl.pathname === '/api/webhooks/telegram'
+    request.nextUrl.pathname === '/api/webhook/telegram'
   ) {
     return NextResponse.next();
   }
