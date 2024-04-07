@@ -40,18 +40,19 @@ export const getTeamChallenges = async (
                                        'is_extra', ca.is_extra, 'is_completed',
                                        exists((select 1
                                                from user_stats us
-                                               where us.challenge_activity_id = ca.id))))
-                 as activities
+                                               where us.challenge_activity_id = ca.id
+                                                 and us.user_id = ${user_id})))) as activities
+
       from challenges c
                left join challenge_instances ci
                          on c.id = ci.challenge_id
                              and ci.start_time < now() and ci.end_time > now()
-               left join user_stats us on ci.id = us.challenge_instance_id and us.user_id = ${user_id}
                left join challenge_activities ca on c.id = ca.challenge_id
                left join activity_types at on ca.activity_type_id = at.id
+               left join user_stats us
+                         on ca.id = us.challenge_activity_id and us.user_id = ${user_id}
       where c.team_id = ${team_id}
-      group by c.id, ci.start_time, ci.end_time, us.user_id
-      order by ci.end_time desc
+      group by c.id, ci.id, ci.start_time, ci.end_time
   `;
 
   const res = challenges.rows as Challenge[];
@@ -88,18 +89,20 @@ export const getUserChallenges = async (
                                        'is_extra', ca.is_extra, 'is_completed',
                                        exists((select 1
                                                from user_stats us
-                                               where us.challenge_activity_id = ca.id)))
+                                               where us.challenge_activity_id = ca.id
+                                                 and us.user_id = ${user_id})))
              )                       as activities,
              us.user_id = ${user_id} as is_completed
 
       from challenges c
                left join teams t on c.team_id = t.id
-               left join user_teams ut on t.id = ut.team_id
+               left join user_teams ut on t.id = ut.team_id and ut.user_id = ${user_id}
                left join challenge_instances ci
                          on c.id = ci.challenge_id
                              and ci.start_time < now() and ci.end_time > now()
-               left join user_stats us on ci.id = us.challenge_instance_id
                left join challenge_activities ca on c.id = ca.challenge_id
+
+               left join user_stats us on ca.id = us.challenge_instance_id and us.user_id = ${user_id}
                left join activity_types at on ca.activity_type_id = at.id
       where ut.user_id = ${user_id}
       group by c.id, ci.start_time, ci.end_time, t.id, t.name, us.user_id
@@ -124,7 +127,7 @@ export const getUserChallenges = async (
 };
 
 export const getChallenge = async (challenge_id: number, user_id: string) => {
-  const res = await sql`
+  const challenges = await sql`
       select c.id,
              c.name,
              c.type,
@@ -145,7 +148,8 @@ export const getChallenge = async (challenge_id: number, user_id: string) => {
                              'is_extra', ca.is_extra,
                              'is_completed', exists((select 1
                                                      from user_stats us
-                                                     where us.challenge_activity_id = ca.id)),
+                                                     where us.challenge_activity_id = ca.id
+                                                       and us.user_id = ${user_id})),
                              'custom_rp', ca.custom_rp
                      ))              as activities,
              us.user_id = ${user_id} as is_completed,
@@ -154,8 +158,8 @@ export const getChallenge = async (challenge_id: number, user_id: string) => {
                left join challenge_instances ci
                          on c.id = ci.challenge_id
                              and ci.start_time < now() and ci.end_time > now()
-               left join user_stats us on ci.id = us.challenge_instance_id and us.user_id = ${user_id}
                left join challenge_activities ca on c.id = ca.challenge_id
+               left join user_stats us on ca.id = us.challenge_instance_id and us.user_id = ${user_id}
                left join activity_types at on ca.activity_type_id = at.id
                left join teams t on c.team_id = t.id
                left join users u on t.owner_id = u.id
@@ -163,7 +167,20 @@ export const getChallenge = async (challenge_id: number, user_id: string) => {
       group by c.id, ci.start_time, ci.end_time, u.telegram_username, t.id, t.name, ci.id, us.user_id
   `;
 
-  return res.rows[0] as Challenge;
+  const res = challenges.rows as Challenge[];
+
+  res.forEach((r) => {
+    let completed = true;
+    r.activities.forEach((a) => {
+      if (!a.is_completed) {
+        completed = false;
+      }
+    });
+
+    r.is_completed = completed;
+  });
+
+  return res[0];
 };
 
 export const createChallenge = async (

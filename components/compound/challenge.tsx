@@ -23,6 +23,8 @@ export const Challenge = ({ challenge }: ChallengeProps) => {
     cardClasses += ' opacity-50';
   }
 
+  console.log('activities', challenge.activities);
+
   return (
     <Link
       key={challenge.id}
